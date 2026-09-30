@@ -115,10 +115,13 @@ class UiSchemeHandlerFactory : public CefSchemeHandlerFactory {
 
  private:
   static CefRefPtr<CefResourceHandler> NotFound() {
-    static const char kMsg[] = "Not found";
+    // Пустое тело: отсутствующий необязательный скрипт (native.js и т.п.) не должен
+    // исполняться как «Not found».
+    static const char kEmpty[] = " ";
     CefRefPtr<CefStreamReader> stream =
-        CefStreamReader::CreateForData(const_cast<char*>(kMsg), sizeof(kMsg) - 1);
-    return new CefStreamResourceHandler("text/plain", stream);
+        CefStreamReader::CreateForData(const_cast<char*>(kEmpty), 1);
+    return new CefStreamResourceHandler(404, "Not Found", "text/plain",
+                                        CefResponse::HeaderMap(), stream);
   }
 
   IMPLEMENT_REFCOUNTING(UiSchemeHandlerFactory);
