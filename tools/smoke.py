@@ -5,6 +5,8 @@ import base64, json, os, subprocess, sys, time, urllib.request, platform
 
 import websocket  # pip install websocket-client
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 exe, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
 PORT = 9222
