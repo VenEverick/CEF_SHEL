@@ -43,27 +43,54 @@ jobs:
           set -o pipefail
           cmake --build build --target Shelter --parallel 2>&1 | tee build.log
 
-      - name: Smoke test
-        continue-on-error: true
-        timeout-minutes: 6
-        shell: bash
-        run: |
-          pip install websocket-client
-          python tools/smoke.py build/Release/Shelter.exe smoke 2>&1 | tee smoke-run.log
-
-      - name: Package
+      - name: Build installer (Inno Setup)
         shell: pwsh
         run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          if (-not (Test-Path $iscc)) { throw "ISCC.exe не найден" }
           New-Item -ItemType Directory -Force dist | Out-Null
-          Copy-Item -Recurse build/Release "dist/SHELTER"
+          & $iscc "/DSourceDir=$PWD\build\Release" "/DAppVersion=1.0.160" installer\shelter.iss 2>&1 | Tee-Object -FilePath package.log
+          if ($LASTEXITCODE -ne 0) { throw "ISCC завершился с кодом $LASTEXITCODE" }
+          Get-ChildItem dist | Out-String | Tee-Object -FilePath package.log -Append
+
+      - name: Install, smoke test, uninstall
+        continue-on-error: true
+        timeout-minutes: 10
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Continue"
+          $setup = "$PWD\dist\SHELTER-Setup-x64.exe"
+          $p = Start-Process -FilePath $setup -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/LOG=$PWD\install.log" -Wait -PassThru
+          "installer exit code: $($p.ExitCode)" | Tee-Object -FilePath smoke-run.log
+          $dir = Join-Path $env:LOCALAPPDATA "Programs\SHELTER"
+          "install dir: $dir" | Tee-Object -FilePath smoke-run.log -Append
+          Get-ChildItem $dir | Select-Object -First 12 Name,Length | Out-String | Tee-Object -FilePath smoke-run.log -Append
+          Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs" -Filter "SHELTER*" -ErrorAction SilentlyContinue | Out-String | Tee-Object -FilePath smoke-run.log -Append
+          pip install websocket-client 2>&1 | Out-Null
+          $env:PYTHONIOENCODING = "utf-8"
+          python tools/smoke.py "$dir\Shelter.exe" smoke 2>&1 | Tee-Object -FilePath smoke-run.log -Append
+          Get-Process Shelter -ErrorAction SilentlyContinue | Stop-Process -Force
+          Start-Sleep -Seconds 2
+          $u = Start-Process -FilePath "$dir\unins000.exe" -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
+          "uninstaller exit code: $($u.ExitCode)" | Tee-Object -FilePath smoke-run.log -Append
+          Start-Sleep -Seconds 3
+          "install dir exists after uninstall: $(Test-Path "$dir\Shelter.exe")" | Tee-Object -FilePath smoke-run.log -Append
+
+      - name: Portable zip
+        shell: pwsh
+        run: |
+          Copy-Item -Recurse build/Release dist/SHELTER
           Remove-Item -Force -ErrorAction SilentlyContinue dist/SHELTER/*.pdb, dist/SHELTER/*.lib, dist/SHELTER/*.exp
-          Compress-Archive -Path dist/SHELTER -DestinationPath dist/SHELTER-windows-x64.zip
-          Get-ChildItem dist | Out-String | Tee-Object -FilePath package.log
+          Compress-Archive -Path dist/SHELTER -DestinationPath dist/SHELTER-windows-x64-portable.zip
+          Remove-Item -Recurse -Force dist/SHELTER
 
       - uses: actions/upload-artifact@v4
         with:
           name: SHELTER-windows-x64
-          path: dist/SHELTER-windows-x64.zip
+          path: |
+            dist/SHELTER-Setup-x64.exe
+            dist/SHELTER-windows-x64-portable.zip
           if-no-files-found: error
 
       - name: Publish logs
@@ -71,7 +98,7 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: tools/push_log.sh windows configure.log build.log smoke-run.log package.log smoke/*
+        run: tools/push_log.sh windows configure.log build.log smoke-run.log package.log install.log smoke/*
 
   macos:
     name: macOS Intel (x86_64)
