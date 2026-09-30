@@ -148,6 +148,33 @@ try:
     log("after close: snap img =", c.eval("!!document.getElementById('shSnap')"))
     os_shot(f"{out}/os-after-menu.png")
 
+    # сценарий «поиск -> капча Google»: UI должен оставаться живым
+    def ui_state(tag):
+        t0 = time.time()
+        v = c.eval("JSON.stringify({url:(window.getSpaceTabs()||[]).map(t=>t.url+' | '+t.title).join(' ;; '),"
+                   "ref:(document.getElementById('btnRef')||{dataset:{}}).dataset.act,"
+                   "back:document.getElementById('btnBack').className,"
+                   "omni:(document.getElementById('omniInput')||{}).value,"
+                   "snap:!!document.getElementById('shSnap'),"
+                   "vp:(function(){var r=document.getElementById('viewport').getBoundingClientRect();return [r.x,r.y,r.width,r.height].map(Math.round)})()})")
+        log(f"[{tag}] ui ({time.time()-t0:.2f}s):", v)
+    log("navigate CC:", c.eval("window.navigate('CC')"))
+    for i in range(4):
+        time.sleep(4)
+        ui_state(f"search+{(i+1)*4}s")
+    ts = targets()
+    log("targets after search:", json.dumps([(t.get("type"), t.get("url")[:110], t.get("title")) for t in ts], ensure_ascii=False))
+    os_shot(f"{out}/os-search.png")
+    c.shot(f"{out}/ui-search.png")
+    log("click sidebar history:", c.eval("(function(){var b=document.querySelector('.ni[data-page=history]'); if(!b) return 'none'; b.click(); return 'clicked';})()"))
+    time.sleep(2)
+    ui_state("after history click")
+    os_shot(f"{out}/os-history.png")
+    log("click back:", c.eval("(function(){document.getElementById('btnBack').click();return 'clicked'})()"))
+    time.sleep(3)
+    ui_state("after back")
+    os_shot(f"{out}/os-back.png")
+
     # ошибки консоли UI
     c.drain(1)
     errs = []
