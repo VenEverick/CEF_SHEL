@@ -325,8 +325,10 @@ Tab* Shell::CreateTab(const std::string& id, const std::string& partition,
   tab.view = CefBrowserView::CreateBrowserView(
       tab.client, url, settings, nullptr, ContextFor(partition),
       new ShellBrowserViewDelegate());
+  const bool can_activate =
+      !CefCommandLine::GetGlobalCommandLine()->HasSwitch("tab-no-activate");
   tab.overlay = window_->AddOverlayView(tab.view, CEF_DOCKING_MODE_CUSTOM,
-                                        /*can_activate=*/true);
+                                        can_activate);
   tab.overlay->SetVisible(false);
   zoom_ = zoom;
   tabs_[id] = std::move(tab);

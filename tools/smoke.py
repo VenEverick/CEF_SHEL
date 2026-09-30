@@ -90,7 +90,7 @@ def os_shot(path):
         log("os_shot failed:", e)
 
 
-args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*"]
+args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*"] + sys.argv[3:]
 log("launch:", args)
 proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 try:
@@ -199,6 +199,29 @@ try:
         os_shot(f"{out}/os-real3.png")
     else:
         log("cliclick not available, real mouse test skipped")
+    if shutil.which("cliclick"):
+        log("--- hit-test diagnostics ---")
+        ts2 = targets()
+        gp = next((t for t in ts2 if t.get("type") == "page" and "google.com" in t.get("url", "")), None)
+        pc = Cdp(gp["webSocketDebuggerUrl"]) if gp else None
+        inj = "window.__clicks=[];['mousedown','pointerdown','click'].forEach(function(n){addEventListener(n,function(e){window.__clicks.push(n+'@'+Math.round(e.clientX)+','+Math.round(e.clientY))},true)});'ok'"
+        log("inject ui:", c.eval(inj))
+        if pc: log("inject page:", pc.eval(inj))
+        def probe(label, expr):
+            r = c.eval("(function(){var e=(%s); var b=e.getBoundingClientRect(); return JSON.stringify({x:window.screenX+b.x+b.width/2,y:window.screenY+b.y+b.height/2})})()" % expr)
+            d = json.loads(r)
+            c.eval("window.__clicks=[]");
+            if pc: pc.eval("window.__clicks=[]")
+            subprocess.run(["cliclick", f"c:{int(d['x'])},{int(d['y'])}"], capture_output=True, text=True)
+            time.sleep(1.5)
+            log(f"probe {label} @{int(d['x'])},{int(d['y'])}: ui={c.eval('JSON.stringify(window.__clicks)')} page={pc.eval('JSON.stringify(window.__clicks)') if pc else None} uiFocus={c.eval('document.hasFocus()')}")
+        probe("sidebar bookmarks", "document.querySelector('.ni[data-page=bookmarks]')")
+        probe("toolbar back", "document.getElementById('btnBack')")
+        probe("omnibox", "document.getElementById('omniInput')")
+        probe("viewport center", "document.getElementById('viewport')")
+        probe("sidebar settings", "document.querySelector('[data-act=settings]')||document.querySelector('.sb-foot button')")
+        probe("sidebar bookmarks again", "document.querySelector('.ni[data-page=bookmarks]')")
+        os_shot(f"{out}/os-probe.png")
     log("click sidebar history:", c.eval("(function(){var b=document.querySelector('.ni[data-page=history]'); if(!b) return 'none'; b.click(); return 'clicked';})()"))
     time.sleep(2)
     ui_state("after history click")
