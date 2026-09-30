@@ -105,9 +105,6 @@ class UiSchemeHandlerFactory : public CefSchemeHandlerFactory {
     if (dot != std::string::npos) ext = rel.substr(dot + 1);
     std::string mime = CefGetMimeType(ext);
     if (mime.empty()) mime = "application/octet-stream";
-    if (mime.rfind("text/", 0) == 0 || ext == "js") {
-      mime += "; charset=utf-8";
-    }
 
     CefRefPtr<CefStreamReader> stream =
         CefStreamReader::CreateForData(data.data(), data.size());
