@@ -26,17 +26,22 @@ jobs:
           path: third_party/cef
           key: ${{ env.CEF_VERSION_KEY }}-windows64-${{ hashFiles('CMakeLists.txt') }}
 
+      - name: MSVC environment (x64)
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Configure
         shell: bash
         run: |
           set -o pipefail
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DUSE_SANDBOX=OFF -DUSE_ATL=OFF 2>&1 | tee configure.log
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_SANDBOX=OFF -DUSE_ATL=OFF 2>&1 | tee configure.log
 
       - name: Build
         shell: bash
         run: |
           set -o pipefail
-          cmake --build build --config Release --target Shelter --parallel 2>&1 | tee build.log
+          cmake --build build --target Shelter --parallel 2>&1 | tee build.log
 
       - name: Publish logs
         if: always()
