@@ -1,1 +1,51 @@
-# CEF_SHEL
+# SHELTER — приватный браузер на Chromium Embedded Framework
+
+Десктопная оболочка для дизайна SHELTER (`resources/ui/index.html`, версия 1.0.160).
+Платформы: **Windows x64** и **macOS Intel (x86_64)**. CEF 154.0.32 (Chromium 154).
+
+## Как это устроено
+
+* **C++ + CEF Views.** Одно фреймлесс-окно. Интерфейс (`index.html`) — отдельный `CefBrowser`,
+  каждая вкладка — собственный `CefBrowserView` (overlay поверх области `#viewport`).
+* **UI загружается с собственной схемы** `shelter://app/index.html` (ресурсы из папки `ui/` рядом с
+  приложением). Схема отдаётся только UI-браузеру, страницы из вкладок к ней не привязаны.
+* **Мост `window.shelterNative`** (`resources/ui/host-bridge.js`) работает поверх `cefQuery`;
+  принимает вызовы только от UI-браузера со страницы `shelter://app/`.
+* **Изоляция сессий:** пространство = `persist:space-<key>` → отдельный `CefRequestContext`
+  с каталогом профиля; режим «Призрак» = `temp:ghost-<key>` → контекст только в памяти.
+* Пока поверх страницы открыто HTML-меню, модальное окно или тост, нативный вид вкладки
+  заменяется снимком (`Page.captureScreenshot`), иначе HTML оказался бы под нативным видом.
+
+## Сборка
+
+Локально ничего ставить не нужно — собирает GitHub Actions (`.github/workflows/build.yml`),
+артефакты: `SHELTER-windows-x64.zip`, `SHELTER-macos-x64.zip/.dmg`.
+
+Вручную (нужны CMake ≥ 3.21 и VS 2022 / Xcode CLT):
+
+```bash
+# Windows
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DUSE_SANDBOX=OFF
+cmake --build build --config Release --target Shelter
+# macOS (Intel)
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPROJECT_ARCH=x86_64 -DUSE_SANDBOX=OFF
+cmake --build build --target Shelter
+```
+
+CEF скачивается автоматически (`cmake/DownloadCEF.cmake`, минимальный дистрибутив).
+
+## Данные
+
+| ОС | Каталог |
+|----|---------|
+| Windows | `%LOCALAPPDATA%\SHELTER` |
+| macOS | `~/Library/Application Support/SHELTER` |
+
+## Состояние (этап 1, MVP)
+
+Есть: окно, UI, вкладки/пространства с изоляцией сессий, навигация (адрес, назад/вперёд/обновить/стоп),
+popup → новая вкладка, страница ошибки загрузки, загрузки с подтверждением, контекстное меню страниц
+(через HTML-меню UI), буфер обмена, зум, печать, F12 → DevTools в отдельном окне, «Удалить данные».
+
+Пока нет: поиск по странице на нативных страницах, секреты (`secretEnc/secretDec`), окно входа
+(`authWindow`), встроенная панель DevTools, миниатюры вкладок в реальном времени, подпись/нотаризация.

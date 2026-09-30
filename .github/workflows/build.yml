@@ -1,0 +1,87 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CEF_VERSION_KEY: cef-154.0.32
+
+jobs:
+  windows:
+    name: Windows x64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache CEF
+        uses: actions/cache@v4
+        with:
+          path: third_party/cef
+          key: ${{ env.CEF_VERSION_KEY }}-windows64-${{ hashFiles('CMakeLists.txt') }}
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+          -DUSE_SANDBOX=OFF -DUSE_ATL=OFF
+
+      - name: Build
+        run: cmake --build build --config Release --target Shelter --parallel
+
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item -Recurse build/Release "dist/SHELTER"
+          Remove-Item -Force -ErrorAction SilentlyContinue dist/SHELTER/*.pdb, dist/SHELTER/*.lib, dist/SHELTER/*.exp
+          Compress-Archive -Path dist/SHELTER -DestinationPath dist/SHELTER-windows-x64.zip
+          Get-ChildItem dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SHELTER-windows-x64
+          path: dist/SHELTER-windows-x64.zip
+          if-no-files-found: error
+
+  macos:
+    name: macOS Intel (x86_64)
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache CEF
+        uses: actions/cache@v4
+        with:
+          path: third_party/cef
+          key: ${{ env.CEF_VERSION_KEY }}-macosx64-${{ hashFiles('CMakeLists.txt') }}
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DPROJECT_ARCH=x86_64 -DCMAKE_OSX_ARCHITECTURES=x86_64
+          -DUSE_SANDBOX=OFF
+
+      - name: Build
+        run: cmake --build build --target Shelter --parallel
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          APP="build/Release/Shelter.app"
+          ls "$APP/Contents" "$APP/Contents/Frameworks" "$APP/Contents/Resources"
+          codesign --force --deep --sign - "$APP"
+          cp -R "$APP" dist/SHELTER.app
+          ditto -c -k --keepParent dist/SHELTER.app dist/SHELTER-macos-x64.zip
+          hdiutil create -volname SHELTER -srcfolder dist/SHELTER.app -ov -format UDZO dist/SHELTER-macos-x64.dmg
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SHELTER-macos-x64
+          path: |
+            dist/SHELTER-macos-x64.zip
+            dist/SHELTER-macos-x64.dmg
+          if-no-files-found: error
