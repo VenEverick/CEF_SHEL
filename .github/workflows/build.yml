@@ -95,30 +95,31 @@ jobs:
           set -o pipefail
           cmake --build build --target Shelter --parallel 2>&1 | tee build.log
 
-      - name: Smoke test
-        continue-on-error: true
-        timeout-minutes: 6
+      - name: Package DMG
         run: |
-          python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
-          python tools/smoke.py "build/Release/Shelter.app/Contents/MacOS/Shelter" smoke 2>&1 | tee smoke-run.log
-
-      - name: Package
-        run: |
+          set -o pipefail
           mkdir -p dist
-          APP="build/Release/Shelter.app"
-          ls "$APP/Contents" "$APP/Contents/Frameworks" "$APP/Contents/Resources"
-          codesign --force --deep --sign - "$APP"
-          cp -R "$APP" dist/SHELTER.app
-          ditto -c -k --keepParent dist/SHELTER.app dist/SHELTER-macos-x64.zip
-          hdiutil create -volname SHELTER -srcfolder dist/SHELTER.app -ov -format UDZO dist/SHELTER-macos-x64.dmg
-          ls -la dist | tee package.log
+          tools/make_dmg.sh build/Release/Shelter.app dist/SHELTER-macos-x64.dmg 2>&1 | tee package.log
+
+      - name: Install from DMG and smoke test
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          set -o pipefail
+          {
+            hdiutil attach dist/SHELTER-macos-x64.dmg -nobrowse -mountpoint /Volumes/SHELTER
+            ls -la /Volumes/SHELTER
+            cp -R /Volumes/SHELTER/SHELTER.app /Applications/
+            hdiutil detach /Volumes/SHELTER
+            ls -la /Applications/SHELTER.app/Contents /Applications/SHELTER.app/Contents/Resources
+            python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
+            python tools/smoke.py /Applications/SHELTER.app/Contents/MacOS/Shelter smoke
+          } 2>&1 | tee smoke-run.log
 
       - uses: actions/upload-artifact@v4
         with:
           name: SHELTER-macos-x64
-          path: |
-            dist/SHELTER-macos-x64.zip
-            dist/SHELTER-macos-x64.dmg
+          path: dist/SHELTER-macos-x64.dmg
           if-no-files-found: error
 
       - name: Publish logs
