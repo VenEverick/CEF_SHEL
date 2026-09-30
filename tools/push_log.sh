@@ -8,9 +8,15 @@ out="$(mktemp -d)"
 {
   echo "run: ${GITHUB_RUN_ID:-?}  sha: ${GITHUB_SHA:-?}  job: ${GITHUB_JOB:-?}"
   echo "---- ошибки ----"
-  for f in "$@"; do [ -f "$f" ] && grep -nE "error|Error|FAILED|fatal|undefined|Undefined|CMake Error" "$f" | head -80; done
+  for f in "$@"; do [ -f "$f" ] && case "$f" in *.log) grep -nE "error|Error|FAILED|fatal|undefined|Undefined|CMake Error" "$f" | head -80;; esac; done
 } > "$out/SUMMARY.txt"
-for f in "$@"; do [ -f "$f" ] && tail -n 700 "$f" > "$out/$(basename "$f")"; done
+for f in "$@"; do
+  [ -f "$f" ] || continue
+  case "$f" in
+    *.log) tail -n 700 "$f" > "$out/$(basename "$f")" ;;
+    *) cp "$f" "$out/$(basename "$f")" ;;
+  esac
+done
 cd "$out"
 git init -q -b "ci-logs-$name"
 git add -A

@@ -43,12 +43,20 @@ jobs:
           set -o pipefail
           cmake --build build --target Shelter --parallel 2>&1 | tee build.log
 
+      - name: Smoke test
+        continue-on-error: true
+        timeout-minutes: 6
+        shell: bash
+        run: |
+          pip install websocket-client
+          python tools/smoke.py build/Release/Shelter.exe smoke 2>&1 | tee smoke-run.log
+
       - name: Publish logs
         if: always()
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: tools/push_log.sh windows configure.log build.log
+        run: tools/push_log.sh windows configure.log build.log smoke-run.log smoke/*
 
       - name: Package
         shell: pwsh
@@ -87,11 +95,18 @@ jobs:
           set -o pipefail
           cmake --build build --target Shelter --parallel 2>&1 | tee build.log
 
+      - name: Smoke test
+        continue-on-error: true
+        timeout-minutes: 6
+        run: |
+          python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
+          python tools/smoke.py "build/Release/Shelter.app/Contents/MacOS/Shelter" smoke 2>&1 | tee smoke-run.log
+
       - name: Publish logs
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: tools/push_log.sh macos configure.log build.log
+        run: tools/push_log.sh macos configure.log build.log smoke-run.log smoke/*
 
       - name: Package
         run: |
