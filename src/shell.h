@@ -133,6 +133,7 @@ class Shell {
   void HideAllTabs();
   void LayoutTab(Tab* tab, const CefRect& rect, bool visible);
   CefRefPtr<CefBrowser> ActiveBrowser();
+  void ApplyTabInsets(const CefRect& r);
   void CaptureSnapshot(const std::string& tab_id, int quality,
                        CefRefPtr<CefMessageRouterBrowserSide::Callback> cb);
   void SetZoomAll(double factor);
@@ -145,7 +146,8 @@ class Shell {
   void DownloadDecision(const std::string& id, const std::string& action);
 
   CefRefPtr<CefWindow> window_;
-  CefRefPtr<CefPanel> root_;  // контейнер: UI-вид + виды вкладок (без overlay-окон)
+  CefRefPtr<CefPanel> root_;       // контейнер: UI-вид + слой вкладок (без overlay-окон)
+  CefRefPtr<CefPanel> tab_layer_;  // поверх UI; BoxLayout с отступами = прямоугольник #viewport
   CefRefPtr<CefBrowserView> ui_view_;
   CefRefPtr<CefBrowser> ui_browser_;
   std::vector<CefDraggableRegion> drag_regions_;

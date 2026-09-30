@@ -11,6 +11,7 @@
 #include "include/cef_command_line.h"
 #include "include/cef_parser.h"
 #include "include/views/cef_display.h"
+#include "include/views/cef_box_layout.h"
 #include "include/views/cef_fill_layout.h"
 #include "include/wrapper/cef_closure_task.h"
 #include "include/wrapper/cef_helpers.h"
@@ -181,9 +182,30 @@ void Shell::OnWindowCreated(CefRefPtr<CefWindow> window) {
   window_->SetToFillLayout();
   root_ = CefPanel::CreatePanel(new RootPanelDelegate());
   root_->AddChildView(ui_view_);
+  tab_layer_ = CefPanel::CreatePanel(nullptr);
+  ApplyTabInsets(CefRect(0, 0, 0, 0));
+  root_->AddChildView(tab_layer_);
   window_->AddChildView(root_);
   window_->Show();
   ui_view_->RequestFocus();
+}
+
+// Вид вкладки лежит в tab_layer_ (BoxLayout, flex=1): отступы слоя задают
+// прямоугольник вкладки внутри окна (у панелей CEF нет абсолютного позиционирования).
+void Shell::ApplyTabInsets(const CefRect& r) {
+  if (!tab_layer_ || !root_) return;
+  const CefRect rb = root_->GetBounds();
+  const int W = std::max(rb.width, r.x + r.width);
+  const int H = std::max(rb.height, r.y + r.height);
+  CefBoxLayoutSettings st;
+  st.horizontal = true;
+  st.inside_border_insets =
+      CefInsets(std::max(0, r.y), std::max(0, r.x),
+                std::max(0, H - r.y - r.height), std::max(0, W - r.x - r.width));
+  st.cross_axis_alignment = CEF_AXIS_ALIGNMENT_STRETCH;
+  st.main_axis_alignment = CEF_AXIS_ALIGNMENT_START;
+  st.default_flex = 1;
+  tab_layer_->SetToBoxLayout(st);
 }
 
 void Shell::OnRootLayout(const CefRect& bounds) {
@@ -208,6 +230,7 @@ bool Shell::CanCloseWindow() {
 void Shell::OnWindowDestroyed() {
   CEF_REQUIRE_UI_THREAD();
   window_ = nullptr;
+  tab_layer_ = nullptr;
   root_ = nullptr;
   ui_view_ = nullptr;
   closing_ = true;
@@ -350,7 +373,7 @@ Tab* Shell::CreateTab(const std::string& id, const std::string& partition,
       tab.client, url, settings, nullptr, ContextFor(partition),
       new ShellBrowserViewDelegate());
   tab.view->SetVisible(false);
-  root_->AddChildView(tab.view);
+  tab_layer_->AddChildView(tab.view);
   zoom_ = zoom;
   tabs_[id] = std::move(tab);
   Tab* t = &tabs_[id];
@@ -381,7 +404,7 @@ void Shell::DestroyTab(const std::string& id) {
   if (tab.snap_registration) tab.snap_registration = nullptr;
   if (tab.view) {
     tab.view->SetVisible(false);
-    if (root_) root_->RemoveChildView(tab.view);
+    if (tab_layer_) tab_layer_->RemoveChildView(tab.view);
   }
   if (tab.browser) tab.browser->GetHost()->CloseBrowser(true);
   tab.view = nullptr;
@@ -396,15 +419,16 @@ void Shell::HideAllTabs() {
 }
 
 void Shell::LayoutTab(Tab* tab, const CefRect& rect, bool visible) {
-  if (!tab || !tab->view || !root_) return;
-  if (rect.width > 0 && rect.height > 0) {
-    tab->view->SetBounds(rect);
-    last_rect_ = rect;
-  }
+  if (!tab || !tab->view || !root_ || !tab_layer_) return;
+  if (rect.width > 0 && rect.height > 0) last_rect_ = rect;
   const bool show = visible && last_rect_.width > 0;
   const bool was_visible = tab->view->IsVisible();
   tab->view->SetVisible(show);
-  if (show && !was_visible) root_->ReorderChildView(tab->view, -1);  // поверх UI-вида
+  if (show) {
+    ApplyTabInsets(last_rect_);
+    tab_layer_->Layout();
+    if (!was_visible) root_->ReorderChildView(tab_layer_, -1);  // поверх UI-вида
+  }
 }
 
 CefRefPtr<CefBrowser> Shell::ActiveBrowser() {
