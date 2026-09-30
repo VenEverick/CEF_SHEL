@@ -117,6 +117,24 @@ try:
     c.shot(f"{out}/ui-start.png")
     os_shot(f"{out}/os-start.png")
 
+    import shutil
+    def active_url():
+        return c.eval("(function(){var t=(window.getSpaceTabs()||[]).find(function(t){return t.id===window.getActiveTabId()});return t&&t.url})()")
+    def real_click(expr, label):
+        r = c.eval("(function(){var e=(%s); if(!e) return null; var b=e.getBoundingClientRect();"
+                   "return JSON.stringify({x:window.screenX+b.x+b.width/2,y:window.screenY+b.y+b.height/2,sx:window.screenX,sy:window.screenY,iw:window.innerWidth,ow:window.outerWidth})})()" % expr)
+        if not r:
+            log(f"real click {label}: element not found"); return
+        d = json.loads(r)
+        res = subprocess.run(["cliclick", f"c:{int(d['x'])},{int(d['y'])}"], capture_output=True, text=True)
+        log(f"real click {label} at {int(d['x'])},{int(d['y'])} win=({d['sx']},{d['sy']}) iw={d['iw']} ow={d['ow']} rc={res.returncode} {res.stderr.strip()[:100]}")
+        time.sleep(2.5)
+        log(f"   -> active tab url: {active_url()}")
+    if shutil.which("cliclick"):
+        log("--- control: real click on bare UI (no native view) ---")
+        real_click("document.querySelector('.ni[data-page=bookmarks]')", "sidebar bookmarks (control)")
+        real_click("document.querySelector('.ni[data-page=start]')", "sidebar start (control)")
+
     # новая вкладка с реальным сайтом
     log("newTab:", c.eval("window.newTab('https://example.org/')"))
     time.sleep(8)
@@ -168,19 +186,6 @@ try:
     c.shot(f"{out}/ui-search.png")
     # настоящие клики мышью ОС (cliclick, только macOS): проверяем, что UI реагирует на ввод,
     # когда поверх лежит нативный вид вкладки
-    import shutil
-    def active_url():
-        return c.eval("(function(){var t=(window.getSpaceTabs()||[]).find(function(t){return t.id===window.getActiveTabId()});return t&&t.url})()")
-    def real_click(expr, label):
-        r = c.eval("(function(){var e=(%s); if(!e) return null; var b=e.getBoundingClientRect();"
-                   "return JSON.stringify({x:window.screenX+b.x+b.width/2,y:window.screenY+b.y+b.height/2,sx:window.screenX,sy:window.screenY,iw:window.innerWidth,ow:window.outerWidth})})()" % expr)
-        if not r:
-            log(f"real click {label}: element not found"); return
-        d = json.loads(r)
-        res = subprocess.run(["cliclick", f"c:{int(d['x'])},{int(d['y'])}"], capture_output=True, text=True)
-        log(f"real click {label} at {int(d['x'])},{int(d['y'])} win=({d['sx']},{d['sy']}) iw={d['iw']} ow={d['ow']} rc={res.returncode} {res.stderr.strip()[:100]}")
-        time.sleep(2.5)
-        log(f"   -> active tab url: {active_url()}")
     if shutil.which("cliclick"):
         log("--- real mouse test ---")
         log("active before:", active_url())
