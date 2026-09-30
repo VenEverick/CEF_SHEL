@@ -166,6 +166,34 @@ try:
     log("targets after search:", json.dumps([(t.get("type"), t.get("url")[:110], t.get("title")) for t in ts], ensure_ascii=False))
     os_shot(f"{out}/os-search.png")
     c.shot(f"{out}/ui-search.png")
+    # настоящие клики мышью ОС (cliclick, только macOS): проверяем, что UI реагирует на ввод,
+    # когда поверх лежит нативный вид вкладки
+    import shutil
+    def active_url():
+        return c.eval("(function(){var t=(window.getSpaceTabs()||[]).find(function(t){return t.id===window.getActiveTabId()});return t&&t.url})()")
+    def real_click(expr, label):
+        r = c.eval("(function(){var e=(%s); if(!e) return null; var b=e.getBoundingClientRect();"
+                   "return JSON.stringify({x:window.screenX+b.x+b.width/2,y:window.screenY+b.y+b.height/2,sx:window.screenX,sy:window.screenY,iw:window.innerWidth,ow:window.outerWidth})})()" % expr)
+        if not r:
+            log(f"real click {label}: element not found"); return
+        d = json.loads(r)
+        res = subprocess.run(["cliclick", f"c:{int(d['x'])},{int(d['y'])}"], capture_output=True, text=True)
+        log(f"real click {label} at {int(d['x'])},{int(d['y'])} win=({d['sx']},{d['sy']}) iw={d['iw']} ow={d['ow']} rc={res.returncode} {res.stderr.strip()[:100]}")
+        time.sleep(2.5)
+        log(f"   -> active tab url: {active_url()}")
+    if shutil.which("cliclick"):
+        log("--- real mouse test ---")
+        log("active before:", active_url())
+        real_click("document.querySelector('.ni[data-page=bookmarks]')", "sidebar bookmarks")
+        real_click("Array.from(document.querySelectorAll('#tabList .tab[data-tab]')).find(function(e){return /Google/.test(e.textContent)})", "sidebar google tab")
+        os_shot(f"{out}/os-real1.png")
+        real_click("document.getElementById('viewport')", "page area")
+        real_click("document.querySelector('.ni[data-page=history]')", "sidebar history after page click")
+        os_shot(f"{out}/os-real2.png")
+        real_click("document.getElementById('btnBack')", "back button")
+        os_shot(f"{out}/os-real3.png")
+    else:
+        log("cliclick not available, real mouse test skipped")
     log("click sidebar history:", c.eval("(function(){var b=document.querySelector('.ni[data-page=history]'); if(!b) return 'none'; b.click(); return 'clicked';})()"))
     time.sleep(2)
     ui_state("after history click")

@@ -139,6 +139,7 @@ jobs:
             cp -R /Volumes/SHELTER/SHELTER.app /Applications/
             hdiutil detach /Volumes/SHELTER
             ls -la /Applications/SHELTER.app/Contents /Applications/SHELTER.app/Contents/Resources
+            (brew install cliclick 2>&1 | tail -2) || true
             python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
             python tools/smoke.py /Applications/SHELTER.app/Contents/MacOS/Shelter smoke
           } 2>&1 | tee smoke-run.log
