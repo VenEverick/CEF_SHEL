@@ -51,13 +51,6 @@ jobs:
           pip install websocket-client
           python tools/smoke.py build/Release/Shelter.exe smoke 2>&1 | tee smoke-run.log
 
-      - name: Publish logs
-        if: always()
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: tools/push_log.sh windows configure.log build.log smoke-run.log smoke/*
-
       - name: Package
         shell: pwsh
         run: |
@@ -65,13 +58,20 @@ jobs:
           Copy-Item -Recurse build/Release "dist/SHELTER"
           Remove-Item -Force -ErrorAction SilentlyContinue dist/SHELTER/*.pdb, dist/SHELTER/*.lib, dist/SHELTER/*.exp
           Compress-Archive -Path dist/SHELTER -DestinationPath dist/SHELTER-windows-x64.zip
-          Get-ChildItem dist
+          Get-ChildItem dist | Out-String | Tee-Object -FilePath package.log
 
       - uses: actions/upload-artifact@v4
         with:
           name: SHELTER-windows-x64
           path: dist/SHELTER-windows-x64.zip
           if-no-files-found: error
+
+      - name: Publish logs
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: tools/push_log.sh windows configure.log build.log smoke-run.log package.log smoke/*
 
   macos:
     name: macOS Intel (x86_64)
@@ -102,12 +102,6 @@ jobs:
           python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
           python tools/smoke.py "build/Release/Shelter.app/Contents/MacOS/Shelter" smoke 2>&1 | tee smoke-run.log
 
-      - name: Publish logs
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: tools/push_log.sh macos configure.log build.log smoke-run.log smoke/*
-
       - name: Package
         run: |
           mkdir -p dist
@@ -117,7 +111,7 @@ jobs:
           cp -R "$APP" dist/SHELTER.app
           ditto -c -k --keepParent dist/SHELTER.app dist/SHELTER-macos-x64.zip
           hdiutil create -volname SHELTER -srcfolder dist/SHELTER.app -ov -format UDZO dist/SHELTER-macos-x64.dmg
-          ls -la dist
+          ls -la dist | tee package.log
 
       - uses: actions/upload-artifact@v4
         with:
@@ -126,3 +120,9 @@ jobs:
             dist/SHELTER-macos-x64.zip
             dist/SHELTER-macos-x64.dmg
           if-no-files-found: error
+
+      - name: Publish logs
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: tools/push_log.sh macos configure.log build.log smoke-run.log package.log smoke/*
