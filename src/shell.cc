@@ -11,6 +11,7 @@
 #include "include/cef_command_line.h"
 #include "include/cef_parser.h"
 #include "include/views/cef_display.h"
+#include "include/views/cef_fill_layout.h"
 #include "include/wrapper/cef_closure_task.h"
 #include "include/wrapper/cef_helpers.h"
 #include "src/clients.h"
