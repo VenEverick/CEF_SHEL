@@ -7,6 +7,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   CEF_VERSION_KEY: cef-154.0.32
 
@@ -24,12 +27,23 @@ jobs:
           key: ${{ env.CEF_VERSION_KEY }}-windows64-${{ hashFiles('CMakeLists.txt') }}
 
       - name: Configure
-        run: >
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-          -DUSE_SANDBOX=OFF -DUSE_ATL=OFF
+        shell: bash
+        run: |
+          set -o pipefail
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DUSE_SANDBOX=OFF -DUSE_ATL=OFF 2>&1 | tee configure.log
 
       - name: Build
-        run: cmake --build build --config Release --target Shelter --parallel
+        shell: bash
+        run: |
+          set -o pipefail
+          cmake --build build --config Release --target Shelter --parallel 2>&1 | tee build.log
+
+      - name: Publish logs
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: tools/push_log.sh windows configure.log build.log
 
       - name: Package
         shell: pwsh
@@ -59,13 +73,20 @@ jobs:
           key: ${{ env.CEF_VERSION_KEY }}-macosx64-${{ hashFiles('CMakeLists.txt') }}
 
       - name: Configure
-        run: >
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          -DPROJECT_ARCH=x86_64 -DCMAKE_OSX_ARCHITECTURES=x86_64
-          -DUSE_SANDBOX=OFF
+        run: |
+          set -o pipefail
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPROJECT_ARCH=x86_64 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DUSE_SANDBOX=OFF 2>&1 | tee configure.log
 
       - name: Build
-        run: cmake --build build --target Shelter --parallel
+        run: |
+          set -o pipefail
+          cmake --build build --target Shelter --parallel 2>&1 | tee build.log
+
+      - name: Publish logs
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: tools/push_log.sh macos configure.log build.log
 
       - name: Package
         run: |
