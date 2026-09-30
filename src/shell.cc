@@ -41,6 +41,19 @@ CefRefPtr<CefImage> LoadWindowIcon() {
   return img;
 }
 
+void DiagLog(const std::string& line) {
+  static const bool enabled =
+      CefCommandLine::GetGlobalCommandLine()->HasSwitch("layout-log");
+  if (!enabled) return;
+  std::ofstream f(platform::UserDataDir() + "/layout.log", std::ios::app);
+  f << line << "\n";
+}
+
+std::string RectStr(const CefRect& r) {
+  return "(" + std::to_string(r.x) + "," + std::to_string(r.y) + " " +
+         std::to_string(r.width) + "x" + std::to_string(r.height) + ")";
+}
+
 // Контейнер без layout-менеджера: размеры видов задаём вручную.
 class RootPanelDelegate : public CefPanelDelegate {
  public:
@@ -184,6 +197,7 @@ void Shell::OnWindowCreated(CefRefPtr<CefWindow> window) {
   root_->AddChildView(ui_view_);
   tab_layer_ = CefPanel::CreatePanel(nullptr);
   ApplyTabInsets(CefRect(0, 0, 0, 0));
+  tab_layer_->SetVisible(false);  // пока нет видимой вкладки — слой не перехватывает мышь
   root_->AddChildView(tab_layer_);
   window_->AddChildView(root_);
   window_->Show();
@@ -209,6 +223,7 @@ void Shell::ApplyTabInsets(const CefRect& r) {
 }
 
 void Shell::OnRootLayout(const CefRect& bounds) {
+  DiagLog("root layout " + RectStr(bounds));
   if (ui_view_ && bounds.width > 0 && bounds.height > 0) {
     ui_view_->SetBounds(CefRect(0, 0, bounds.width, bounds.height));
   }
@@ -416,6 +431,7 @@ void Shell::HideAllTabs() {
   for (auto& kv : tabs_) {
     if (kv.second.view) kv.second.view->SetVisible(false);
   }
+  if (tab_layer_) tab_layer_->SetVisible(false);
 }
 
 void Shell::LayoutTab(Tab* tab, const CefRect& rect, bool visible) {
@@ -425,10 +441,19 @@ void Shell::LayoutTab(Tab* tab, const CefRect& rect, bool visible) {
   const bool was_visible = tab->view->IsVisible();
   tab->view->SetVisible(show);
   if (show) {
+    tab_layer_->SetVisible(true);
     ApplyTabInsets(last_rect_);
     tab_layer_->Layout();
     if (!was_visible) root_->ReorderChildView(tab_layer_, -1);  // поверх UI-вида
+  } else {
+    tab_layer_->SetVisible(false);
   }
+  DiagLog("layout tab " + tab->id + " rect=" + RectStr(rect) + " show=" +
+          (show ? "1" : "0") + " root=" + RectStr(root_->GetBounds()) +
+          " ui=" + RectStr(ui_view_ ? ui_view_->GetBounds() : CefRect()) +
+          " layer=" + RectStr(tab_layer_->GetBounds()) +
+          " view=" + RectStr(tab->view->GetBounds()) + " screen=" +
+          RectStr(tab->view->GetBoundsInScreen()));
 }
 
 CefRefPtr<CefBrowser> Shell::ActiveBrowser() {

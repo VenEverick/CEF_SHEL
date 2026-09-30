@@ -90,7 +90,7 @@ def os_shot(path):
         log("os_shot failed:", e)
 
 
-args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*"] + sys.argv[3:]
+args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*", "--layout-log"] + sys.argv[3:]
 log("launch:", args)
 proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 try:
@@ -242,6 +242,12 @@ try:
     log("ui console problems:", len(errs))
     for e in errs[:15]:
         log("  ", e)
+    try:
+        lp = os.path.expanduser("~/Library/Application Support/SHELTER/layout.log") if platform.system() == "Darwin" else os.path.join(os.environ.get("LOCALAPPDATA", ""), "SHELTER", "layout.log")
+        log("--- layout.log ---")
+        log(open(lp, encoding="utf-8", errors="replace").read()[-6000:])
+    except Exception as e:
+        log("layout.log unavailable:", e)
     log("SMOKE DONE")
 finally:
     try:
