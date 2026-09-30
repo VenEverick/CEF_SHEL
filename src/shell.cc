@@ -39,6 +39,19 @@ CefRefPtr<CefImage> LoadWindowIcon() {
   return img;
 }
 
+// Контейнер без layout-менеджера: размеры видов задаём вручную.
+class RootPanelDelegate : public CefPanelDelegate {
+ public:
+  RootPanelDelegate() = default;
+  void OnLayoutChanged(CefRefPtr<CefView>, const CefRect& new_bounds) override {
+    Shell::Get().OnRootLayout(new_bounds);
+  }
+
+ private:
+  IMPLEMENT_REFCOUNTING(RootPanelDelegate);
+  DISALLOW_COPY_AND_ASSIGN(RootPanelDelegate);
+};
+
 // ---- окно ------------------------------------------------------------------
 
 class ShellWindowDelegate : public CefWindowDelegate {
@@ -164,9 +177,18 @@ void Shell::OnWindowCreated(CefRefPtr<CefWindow> window) {
     window_->SetWindowIcon(icon);
     window_->SetWindowAppIcon(icon);
   }
-  window_->AddChildView(ui_view_);
+  window_->SetToFillLayout();
+  root_ = CefPanel::CreatePanel(new RootPanelDelegate());
+  root_->AddChildView(ui_view_);
+  window_->AddChildView(root_);
   window_->Show();
   ui_view_->RequestFocus();
+}
+
+void Shell::OnRootLayout(const CefRect& bounds) {
+  if (ui_view_ && bounds.width > 0 && bounds.height > 0) {
+    ui_view_->SetBounds(CefRect(0, 0, bounds.width, bounds.height));
+  }
 }
 
 bool Shell::CanCloseWindow() {
@@ -185,6 +207,7 @@ bool Shell::CanCloseWindow() {
 void Shell::OnWindowDestroyed() {
   CEF_REQUIRE_UI_THREAD();
   window_ = nullptr;
+  root_ = nullptr;
   ui_view_ = nullptr;
   closing_ = true;
   for (auto& w : std::set<CefRefPtr<CefWindow>>(popup_windows_)) w->Close();
@@ -325,11 +348,8 @@ Tab* Shell::CreateTab(const std::string& id, const std::string& partition,
   tab.view = CefBrowserView::CreateBrowserView(
       tab.client, url, settings, nullptr, ContextFor(partition),
       new ShellBrowserViewDelegate());
-  const bool can_activate =
-      !CefCommandLine::GetGlobalCommandLine()->HasSwitch("tab-no-activate");
-  tab.overlay = window_->AddOverlayView(tab.view, CEF_DOCKING_MODE_CUSTOM,
-                                        can_activate);
-  tab.overlay->SetVisible(false);
+  tab.view->SetVisible(false);
+  root_->AddChildView(tab.view);
   zoom_ = zoom;
   tabs_[id] = std::move(tab);
   Tab* t = &tabs_[id];
@@ -358,10 +378,11 @@ void Shell::DestroyTab(const std::string& id) {
   tabs_.erase(it);
   if (active_tab_ == id) active_tab_.clear();
   if (tab.snap_registration) tab.snap_registration = nullptr;
-  if (tab.overlay && tab.overlay->IsValid()) tab.overlay->Destroy();
-  // Последняя ссылка на BrowserView уходит вместе с tab — браузер закроется сам
-  // (OnBeforeClose придёт позже, TabClient к этому моменту уже «отвязан»).
-  tab.overlay = nullptr;
+  if (tab.view) {
+    tab.view->SetVisible(false);
+    if (root_) root_->RemoveChildView(tab.view);
+  }
+  if (tab.browser) tab.browser->GetHost()->CloseBrowser(true);
   tab.view = nullptr;
   tab.browser = nullptr;
   ReleaseContextIfUnused(tab.partition);
@@ -369,19 +390,20 @@ void Shell::DestroyTab(const std::string& id) {
 
 void Shell::HideAllTabs() {
   for (auto& kv : tabs_) {
-    if (kv.second.overlay && kv.second.overlay->IsValid()) {
-      kv.second.overlay->SetVisible(false);
-    }
+    if (kv.second.view) kv.second.view->SetVisible(false);
   }
 }
 
 void Shell::LayoutTab(Tab* tab, const CefRect& rect, bool visible) {
-  if (!tab || !tab->overlay || !tab->overlay->IsValid()) return;
+  if (!tab || !tab->view || !root_) return;
   if (rect.width > 0 && rect.height > 0) {
-    tab->overlay->SetBounds(rect);
+    tab->view->SetBounds(rect);
     last_rect_ = rect;
   }
-  tab->overlay->SetVisible(visible && last_rect_.width > 0);
+  const bool show = visible && last_rect_.width > 0;
+  const bool was_visible = tab->view->IsVisible();
+  tab->view->SetVisible(show);
+  if (show && !was_visible) root_->ReorderChildView(tab->view, -1);  // поверх UI-вида
 }
 
 CefRefPtr<CefBrowser> Shell::ActiveBrowser() {

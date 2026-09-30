@@ -142,9 +142,6 @@ jobs:
             (brew install cliclick 2>&1 | tail -2) || true
             python3 -m venv .venv && . .venv/bin/activate && pip install websocket-client
             python tools/smoke.py /Applications/SHELTER.app/Contents/MacOS/Shelter smoke
-            pkill -f Shelter || true; sleep 3
-            python tools/smoke.py /Applications/SHELTER.app/Contents/MacOS/Shelter smoke2 --tab-no-activate
-            for f in smoke2/*; do mv "$f" "smoke/v2-$(basename "$f")"; done
           } 2>&1 | tee smoke-run.log
 
       - uses: actions/upload-artifact@v4

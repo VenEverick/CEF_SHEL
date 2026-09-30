@@ -191,8 +191,8 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
     }
     active_tab_ = id;
     for (auto& kv : tabs_) {
-      if (kv.first != id && kv.second.overlay && kv.second.overlay->IsValid()) {
-        kv.second.overlay->SetVisible(false);
+      if (kv.first != id && kv.second.view) {
+        kv.second.view->SetVisible(false);
       }
     }
     LayoutTab(t, RectOf(a), Flag(a, "visible", true));

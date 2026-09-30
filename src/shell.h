@@ -3,7 +3,7 @@
 //  ┌─ CefWindow (frameless) ────────────────────────────────────────────┐
 //  │  CefBrowserView #0  — chrome-UI (shelter://app/index.html)         │
 //  │  ┌────────────────────────────────────────────────────────────┐   │
-//  │  │ overlay: CefBrowserView вкладки (по одной на вкладку UI),   │   │
+//  │  │ дочерний вид: CefBrowserView вкладки (по одной на вкладку), │   │
 //  │  │ накладывается на прямоугольник #viewport из вёрстки         │   │
 //  │  └────────────────────────────────────────────────────────────┘   │
 //  └────────────────────────────────────────────────────────────────────┘
@@ -27,7 +27,8 @@
 #include "include/cef_request_context.h"
 #include "include/views/cef_browser_view.h"
 #include "include/views/cef_browser_view_delegate.h"
-#include "include/views/cef_overlay_controller.h"
+#include "include/views/cef_panel.h"
+#include "include/views/cef_panel_delegate.h"
 #include "include/views/cef_window.h"
 #include "include/views/cef_window_delegate.h"
 #include "include/wrapper/cef_message_router.h"
@@ -46,7 +47,6 @@ struct Tab {
   bool loading = false;
   int browser_id = 0;
   CefRefPtr<CefBrowserView> view;
-  CefRefPtr<CefOverlayController> overlay;
   CefRefPtr<CefBrowser> browser;
   CefRefPtr<TabClient> client;
   std::string pending_url;  // если браузер ещё не создан
@@ -74,6 +74,7 @@ class Shell {
   bool CanCloseWindow();
   void OnWindowCreated(CefRefPtr<CefWindow> window);
   void OnWindowDestroyed();
+  void OnRootLayout(const CefRect& bounds);
   void TrackPopupWindow(CefRefPtr<CefWindow> window);
   void UntrackPopupWindow(CefRefPtr<CefWindow> window);
   CefRefPtr<CefWindow> window() const { return window_; }
@@ -144,6 +145,7 @@ class Shell {
   void DownloadDecision(const std::string& id, const std::string& action);
 
   CefRefPtr<CefWindow> window_;
+  CefRefPtr<CefPanel> root_;  // контейнер: UI-вид + виды вкладок (без overlay-окон)
   CefRefPtr<CefBrowserView> ui_view_;
   CefRefPtr<CefBrowser> ui_browser_;
   std::vector<CefDraggableRegion> drag_regions_;
