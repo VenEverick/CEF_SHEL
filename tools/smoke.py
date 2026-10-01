@@ -204,7 +204,7 @@ try:
         ts2 = targets()
         gp = next((t for t in ts2 if t.get("type") == "page" and "google.com" in t.get("url", "")), None)
         pc = Cdp(gp["webSocketDebuggerUrl"]) if gp else None
-        inj = "window.__clicks=[];['mousedown','pointerdown','click'].forEach(function(n){addEventListener(n,function(e){window.__clicks.push(n+'@'+Math.round(e.clientX)+','+Math.round(e.clientY))},true)});'ok'"
+        inj = "window.__clicks=[];['mousemove','mousedown','pointerdown','click'].forEach(function(n){addEventListener(n,function(e){window.__clicks.push(n+'@'+Math.round(e.clientX)+','+Math.round(e.clientY))},true)});'ok'"
         log("inject ui:", c.eval(inj))
         if pc: log("inject page:", pc.eval(inj))
         def probe(label, expr):
@@ -215,6 +215,7 @@ try:
             subprocess.run(["cliclick", f"c:{int(d['x'])},{int(d['y'])}"], capture_output=True, text=True)
             time.sleep(1.5)
             log(f"probe {label} @{int(d['x'])},{int(d['y'])}: ui={c.eval('JSON.stringify(window.__clicks)')} page={pc.eval('JSON.stringify(window.__clicks)') if pc else None} uiFocus={c.eval('document.hasFocus()')}")
+        log("app-regions:", c.eval("""(function(){var out=[];document.querySelectorAll('body, body *').forEach(function(e){var v=getComputedStyle(e).webkitAppRegion; if(v&&v!=='none'){var b=e.getBoundingClientRect(); out.push((e.id||e.className||e.tagName).toString().slice(0,30)+':'+v+':'+[b.x,b.y,b.width,b.height].map(Math.round).join(','))}}); return JSON.stringify(out.slice(0,60))})()"""))
         probe("sidebar bookmarks", "document.querySelector('.ni[data-page=bookmarks]')")
         probe("toolbar back", "document.getElementById('btnBack')")
         probe("omnibox", "document.getElementById('omniInput')")
