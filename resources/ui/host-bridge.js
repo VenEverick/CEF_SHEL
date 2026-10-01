@@ -450,7 +450,7 @@
       if (p.id !== st.tabId || !st.visible) return;
       var c = byId('findCnt'), i = byId('findInput');
       if (!c || !i || !i.value.trim()) return;
-      c.textContent = p.count > 0 ? (p.idx + ' / ' + p.count) : '0 / 0';
+      c.textContent = p.count > 0 ? (Math.max(1, p.idx) + ' / ' + p.count) : '0 / 0';
     },
     dlprompt: function (p) { if (cbs.dlprompt) cbs.dlprompt(p); },
     download: function (p) { if (typeof window.shelterDownload === 'function') window.shelterDownload(p); }

@@ -272,6 +272,74 @@ try:
     ui_state("after back")
     os_shot(f"{out}/os-back.png")
 
+    # функциональный сценарий на локальном сервере: навигация, назад/вперёд, загрузка, зум, закрытие вкладки
+    log("--- functional scenario (local server) ---")
+    import threading, http.server, socketserver
+    class H(http.server.BaseHTTPRequestHandler):
+        def log_message(self, *a): pass
+        def do_GET(self):
+            if self.path.startswith("/file.bin"):
+                body = b"S" * 200000
+                self.send_response(200)
+                self.send_header("Content-Type", "application/octet-stream")
+                self.send_header("Content-Disposition", 'attachment; filename="shelter-test.bin"')
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers(); self.wfile.write(body); return
+            body = ("<!doctype html><title>Page %s</title><h1>Page %s</h1><p>needle needle needle</p>" % (self.path, self.path)).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+    socketserver.TCPServer.allow_reuse_address = True
+    srv = socketserver.ThreadingTCPServer(("127.0.0.1", 8765), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    def tabs_desc():
+        return c.eval("(window.getSpaceTabs()||[]).map(t=>(t.id===window.getActiveTabId()?'*':'')+t.url+' | '+t.title).join(' ;; ')")
+    log("newTab p1:", c.eval("window.newTab('http://127.0.0.1:8765/p1')"))
+    time.sleep(4)
+    log("after p1:", tabs_desc())
+    log("navigate p2:", c.eval("window.navigate('http://127.0.0.1:8765/p2')"))
+    time.sleep(4)
+    log("after p2:", tabs_desc())
+    c.eval("document.getElementById('btnBack').click()")
+    time.sleep(3)
+    log("after back:", tabs_desc())
+    c.eval("document.getElementById('btnFwd').click()")
+    time.sleep(3)
+    log("after forward:", tabs_desc())
+    # поиск по тексту локальной страницы
+    c.eval("window.openFind()")
+    time.sleep(0.6)
+    c.eval("(function(){var i=document.getElementById('findInput');i.value='needle';i.dispatchEvent(new Event('input',{bubbles:true}));})()")
+    time.sleep(2.5)
+    log("local find cnt (expect 1 / 3):", c.eval("document.getElementById('findCnt').textContent"))
+    c.eval("document.querySelector('[data-act=findClose]').click()")
+    time.sleep(1)
+    # зум
+    log("zoom:", c.eval("(function(){window.shelterSetZoomAll(1.5);return 'set'})()"))
+    time.sleep(1.5)
+    pg2 = next((t for t in targets() if t.get("type") == "page" and "8765/p2" in t.get("url", "")), None)
+    if pg2:
+        log("page devicePixel/zoom check, innerWidth:", Cdp(pg2["webSocketDebuggerUrl"]).eval("window.innerWidth"))
+    c.eval("window.shelterSetZoomAll(1)")
+    # загрузка
+    dl_dir = os.path.join(os.path.expanduser("~"), "Downloads")
+    target = os.path.join(dl_dir, "shelter-test.bin")
+    if os.path.exists(target): os.remove(target)
+    log("navigate download:", c.eval("window.navigate('http://127.0.0.1:8765/file.bin')"))
+    time.sleep(4)
+    log("download prompt shown:", c.eval("!!document.querySelector('[data-dlp=save]')"))
+    c.eval("(function(){var b=document.querySelector('[data-dlp=save]'); if(b) b.click();})()")
+    time.sleep(4)
+    log("download file exists:", os.path.exists(target), os.path.getsize(target) if os.path.exists(target) else -1, "dir:", dl_dir)
+    log("tabs after download:", tabs_desc())
+    # закрытие вкладки
+    n0 = c.eval("(window.getSpaceTabs()||[]).length")
+    c.eval("window.closeTab(window.getActiveTabId())")
+    time.sleep(2.5)
+    log("tabs before/after close:", n0, c.eval("(window.getSpaceTabs()||[]).length"), "| active:", tabs_desc())
+    os_shot(f"{out}/os-func.png")
+
     # ошибки консоли UI
     c.drain(1)
     errs = []
