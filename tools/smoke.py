@@ -287,11 +287,11 @@ try:
                 self.end_headers(); self.wfile.write(body); return
             if self.path.startswith("/mark"):
                 m = self.path.split("m=")[-1].split("&")[0]
-                body = ("<!doctype html><title>Mark</title><h1>%s</h1><script>try{localStorage.setItem('mk','%s')}catch(e){}</script>" % (m, m)).encode()
+                body = ("<!doctype html><title>Mark</title><h1>%s</h1><script>try{localStorage.setItem('k_%s','1')}catch(e){}</script>" % (m, m)).encode()
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html")
                 self.send_header("Cache-Control", "public, max-age=3600")
-                self.send_header("Set-Cookie", "gm=%s; Max-Age=86400; Path=/" % m)
+                self.send_header("Set-Cookie", "c_%s=1; Max-Age=86400; Path=/" % m)
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers(); self.wfile.write(body); return
             if self.path.startswith("/dl"):
@@ -450,6 +450,9 @@ try:
     c.eval("window.newTab('http://127.0.0.1:8765/mark?m=%s')" % mg); time.sleep(5)
     log("ghost tab:", tabs_desc())
     log("page marker (ghost tab):", page_eval("mark?m=" + mg, "document.body.innerText"))
+    log("ghost page cookies (must NOT contain PERSISTMARK):", page_eval("mark?m=" + mg, "document.cookie"))
+    log("ghost page localStorage keys:", page_eval("mark?m=" + mg, "Object.keys(localStorage).join(',')"))
+    log("persist page cookies:", page_eval("mark?m=" + mp, "document.cookie"))
     time.sleep(30)  # даём сбросить кеш/историю/localStorage на диск
     c.eval("window.shelterSetZoomAll(1)")
     udir = os.path.expanduser("~/Library/Application Support/SHELTER") if platform.system() == "Darwin" else os.path.join(os.environ.get("LOCALAPPDATA", ""), "SHELTER")

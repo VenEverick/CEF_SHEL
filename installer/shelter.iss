@@ -1,10 +1,10 @@
 ; SHELTER — установщик для Windows x64 (Inno Setup 6).
-; Сборка:  ISCC.exe /DSourceDir=..\build\Release /DAppVersion=1.0.160 installer\shelter.iss
+; Сборка:  ISCC.exe /DSourceDir=..\build\Release /DAppVersion=1.0.163 installer\shelter.iss
 ; Установка на пользователя (без прав администратора): %LOCALAPPDATA%\Programs\SHELTER.
 ; Данные профиля (%LOCALAPPDATA%\SHELTER) при удалении программы НЕ стираются.
 
 #ifndef AppVersion
-  #define AppVersion "1.0.160"
+  #define AppVersion "1.0.163"
 #endif
 #ifndef SourceDir
   #define SourceDir "..\build\Release"

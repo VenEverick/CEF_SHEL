@@ -160,77 +160,9 @@ std::string DumpWindowChain(void* handle) {
 
 void InstallInputFixes() {}
 
-void ApplyViewClip(void* handle, const double radii[4],
-                   const std::vector<std::array<int, 4>>& holes, int view_w,
-                   int view_h) {
-  HWND h = static_cast<HWND>(handle);
-  if (!h || !IsWindow(h) || view_w <= 0 || view_h <= 0) return;
-  // В режиме Views вид вкладки — это HWND «Chrome_RenderWidgetHostHWND», прямой потомок
-  // главного окна (GetWindowHandle() возвращает само главное окно). Находим видимый потомок
-  // меньше окна (полноразмерные — это интерфейс и D3D-окно) и задаём область ему;
-  // остальным вкладкам область снимаем.
-  HWND root = GetAncestor(h, GA_ROOT);
-  if (!root) root = h;
-  RECT rr{};
-  GetWindowRect(root, &rr);
-  const int rootW = rr.right - rr.left, rootH = rr.bottom - rr.top;
-  HWND cur = nullptr;
-  for (HWND c = GetWindow(root, GW_CHILD); c; c = GetWindow(c, GW_HWNDNEXT)) {
-    wchar_t cls[64] = {0};
-    GetClassNameW(c, cls, 63);
-    if (wcscmp(cls, L"Chrome_RenderWidgetHostHWND") != 0) continue;
-    RECT r{};
-    GetWindowRect(c, &r);
-    const bool full = (r.right - r.left) >= rootW - 2 && (r.bottom - r.top) >= rootH - 2;
-    if (full) continue;
-    if (!cur && IsWindowVisible(c)) {
-      cur = c;
-    } else {
-      SetWindowRgn(c, nullptr, TRUE);
-    }
-  }
-  if (!cur) return;
-
-  bool any = !holes.empty();
-  for (int i = 0; i < 4; ++i) any = any || radii[i] > 0.5;
-  if (!any) {
-    SetWindowRgn(cur, nullptr, TRUE);
-    return;
-  }
-  RECT rc;
-  if (!GetWindowRect(cur, &rc)) return;
-  const int W = rc.right - rc.left, H = rc.bottom - rc.top;
-  if (W <= 0 || H <= 0) return;
-  const double sx = static_cast<double>(W) / view_w;
-  const double sy = static_cast<double>(H) / view_h;
-
-  HRGN rgn = CreateRectRgn(0, 0, W, H);
-  // углы: tl, tr, br, bl
-  for (int i = 0; i < 4; ++i) {
-    const int r = static_cast<int>(radii[i] * sx + 0.5);
-    if (r <= 0) continue;
-    int x0 = 0, y0 = 0, ex0 = 0, ey0 = 0;
-    switch (i) {
-      case 0: x0 = 0;     y0 = 0;     ex0 = 0;         ey0 = 0;         break;
-      case 1: x0 = W - r; y0 = 0;     ex0 = W - 2 * r; ey0 = 0;         break;
-      case 2: x0 = W - r; y0 = H - r; ex0 = W - 2 * r; ey0 = H - 2 * r; break;
-      default: x0 = 0;    y0 = H - r; ex0 = 0;         ey0 = H - 2 * r; break;
-    }
-    HRGN cut = CreateRectRgn(x0, y0, x0 + r, y0 + r);
-    HRGN ell = CreateEllipticRgn(ex0, ey0, ex0 + 2 * r + 1, ey0 + 2 * r + 1);
-    CombineRgn(cut, cut, ell, RGN_DIFF);
-    CombineRgn(rgn, rgn, cut, RGN_DIFF);
-    DeleteObject(cut);
-    DeleteObject(ell);
-  }
-  for (const auto& hl : holes) {
-    HRGN hr = CreateRectRgn(static_cast<int>(hl[0] * sx), static_cast<int>(hl[1] * sy),
-                            static_cast<int>((hl[0] + hl[2]) * sx + 0.5),
-                            static_cast<int>((hl[1] + hl[3]) * sy + 0.5));
-    CombineRgn(rgn, rgn, hr, RGN_DIFF);
-    DeleteObject(hr);
-  }
-  if (!SetWindowRgn(cur, rgn, TRUE)) DeleteObject(rgn);  // при успехе регионом владеет система
+void ApplyViewClip(void*, const double[4], const std::vector<std::array<int, 4>>&, int, int) {
+  // Windows: содержимое вкладки рисует общая поверхность DirectComposition, область HWND на
+  // пиксели не влияет. Скругление/«дыры» не используются (см. USE_HOLES в host-bridge.js).
 }
 
 }  // namespace platform

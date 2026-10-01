@@ -11,6 +11,9 @@
   if (window.shelterNative) return;
 
   var PLATFORM = '__PLATFORM__';
+  /* «Дыры» и скругление нативного вида вкладки: только macOS (на Windows содержимое рисует
+     общая DirectComposition-поверхность, окнам HWND область не помогает). */
+  var USE_HOLES = PLATFORM === 'darwin';
   var VERSION = '__APP_VERSION__';
   var root = document.documentElement;
 
@@ -225,7 +228,10 @@
   /* ---------- стили ---------- */
   var style = document.createElement('style');
   style.textContent =
-    '.sh-snap-wait .menu,.sh-snap-wait .scrim{visibility:hidden!important}' +
+    (USE_HOLES ? '.sh-snap-wait .menu,.sh-snap-wait .scrim{visibility:hidden!important}'
+               : '.sh-snap-wait .menu,.sh-snap-wait .scrim,.sh-snap-wait #toasts,.sh-snap-wait .suggest{visibility:hidden!important}') +
+    /* Windows: пиксели страницы нельзя обрезать по маске окна, поэтому скругление сцены делаем мелким */
+    (USE_HOLES ? '' : '.stage{border-radius:6px!important}') +
     '#shSnap{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:fill;pointer-events:none;z-index:3;background:#fff}' +
     (PLATFORM === 'darwin' ? '#winLights{visibility:hidden!important}' : '');
   (document.head || root).appendChild(style);
@@ -233,10 +239,12 @@
 
   /* ---------- снимок вместо нативного вида ---------- */
   /* Модальные/интерактивные слои, которым нужен снимок вместо нативного вида: меню, модалки. */
-  var OVERLAY_SEL = '.menu:not(.closing),.scrim:not(.closing),.call:not([hidden]),#findbar:not([hidden])';
+  var FREEZE_BASE = '.menu:not(.closing),.scrim:not(.closing),.call:not([hidden]),#findbar:not([hidden])';
   /* Лёгкие слои (подсказки, уведомления, подсказки омнибокса, панель загрузок) показываются через
      «дыры» в нативном виде вкладки: страница остаётся живой, без снимков и подвисаний. */
   var HOLE_SEL = '.tip,#toasts>.toast,.suggest:not([hidden]),#dlFloat:not([hidden])';
+  /* без «дыр» те же слои показываем через снимок (как раньше) */
+  var OVERLAY_SEL = USE_HOLES ? FREEZE_BASE : FREEZE_BASE + ',' + HOLE_SEL;
 
   /* ---------- замеры ---------- */
   var perf = window.__shPerf = { freezes: 0, thaws: 0, snapMs: [], snapKB: [], freezeMs: [], thawMs: [], holes: 0, clips: 0, longTasks: 0, longMax: 0 };
@@ -350,7 +358,7 @@
     return out.map(function (a) { return [Math.round(a[0] - vp.x), Math.round(a[1] - vp.y), Math.round(a[2] - a[0]), Math.round(a[3] - a[1])]; });
   }
   function syncClip() {
-    if (!st.visible || st.frozen || st.busy) return 0;
+    if (!USE_HOLES || !st.visible || st.frozen || st.busy) return 0;
     var vp = vpRect();
     if (!vp || vp.w < 2) return 0;
     var rad = computeRadii(vp), holes = holeRects(vp);

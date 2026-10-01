@@ -50,7 +50,7 @@ jobs:
           if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
           if (-not (Test-Path $iscc)) { throw "ISCC.exe не найден" }
           New-Item -ItemType Directory -Force dist | Out-Null
-          & $iscc "/DSourceDir=$PWD\build\Release" "/DAppVersion=1.0.160" installer\shelter.iss 2>&1 | Tee-Object -FilePath package.log
+          & $iscc "/DSourceDir=$PWD\build\Release" "/DAppVersion=1.0.163" installer\shelter.iss 2>&1 | Tee-Object -FilePath package.log
           if ($LASTEXITCODE -ne 0) { throw "ISCC завершился с кодом $LASTEXITCODE" }
           Get-ChildItem dist | Out-String | Tee-Object -FilePath package.log -Append
 

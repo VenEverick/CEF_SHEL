@@ -9,7 +9,7 @@
 namespace shelter {
 
 inline constexpr char kAppName[] = "SHELTER";
-inline constexpr char kAppVersion[] = "1.0.160";
+inline constexpr char kAppVersion[] = "1.0.163";
 
 // Внутренняя схема, по которой отдаётся chrome-UI (resources/ui/*).
 // Зарегистрирована как standard + secure + cors + fetch, поэтому у UI есть

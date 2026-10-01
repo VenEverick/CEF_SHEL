@@ -5,7 +5,7 @@ set(CMAKE_CONFIGURATION_TYPES Release)
 project(shelter)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(SHELTER_VERSION "1.0.160")
+set(SHELTER_VERSION "1.0.163")
 
 # ---- CEF ---------------------------------------------------------------------
 set(CEF_VERSION "154.0.32+g682c378+chromium-154.0.8037.58")

@@ -18,11 +18,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Golubev & Kulkov"
             VALUE "FileDescription", "SHELTER - Private Browser"
-            VALUE "FileVersion", "1.0.160"
+            VALUE "FileVersion", "1.0.163"
             VALUE "InternalName", "Shelter"
             VALUE "OriginalFilename", "Shelter.exe"
             VALUE "ProductName", "SHELTER"
-            VALUE "ProductVersion", "1.0.160"
+            VALUE "ProductVersion", "1.0.163"
         END
     END
     BLOCK "VarFileInfo"
