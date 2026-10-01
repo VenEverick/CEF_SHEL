@@ -295,6 +295,13 @@ void TabClient::OnDownloadUpdated(CefRefPtr<CefBrowser>,
   Shell::Get().OnTabDownloadUpdated(item);
 }
 
+void TabClient::OnFindResult(CefRefPtr<CefBrowser> browser, int, int count,
+                             const CefRect&, int activeMatchOrdinal,
+                             bool finalUpdate) {
+  CEF_REQUIRE_UI_THREAD();
+  Shell::Get().OnTabFindResult(browser, count, activeMatchOrdinal, finalUpdate);
+}
+
 bool TabClient::OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
                               const CefKeyEvent& event, CefEventHandle,
                               bool*) {

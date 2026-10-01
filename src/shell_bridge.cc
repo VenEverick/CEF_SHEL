@@ -258,6 +258,24 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
     cb->Success("{}");
     return true;
   }
+  if (m == "find") {  // поиск по странице вкладки (нативный)
+    Tab* t = FindTab(Str(a, "id"));
+    if (t && t->browser) {
+      if (Str(a, "act") == "stop") {
+        t->browser->GetHost()->StopFinding(true);
+      } else {
+        const std::string text = Str(a, "q");
+        if (text.empty()) {
+          t->browser->GetHost()->StopFinding(true);
+        } else {
+          t->browser->GetHost()->Find(text, Flag(a, "forward", true), false,
+                                      Flag(a, "next", false));
+        }
+      }
+    }
+    cb->Success("{}");
+    return true;
+  }
   if (m == "devtools") {
     if (Str(a, "act") == "window") TabAction(active_tab_, "devtools", "");
     cb->Success("{\"ok\":false}");

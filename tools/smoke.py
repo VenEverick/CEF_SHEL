@@ -191,6 +191,21 @@ try:
         ui_state(f"search+{(i+1)*4}s")
     ts = targets()
     log("targets after search:", json.dumps([(t.get("type"), t.get("url")[:110], t.get("title")) for t in ts], ensure_ascii=False))
+    # поиск по странице (нативный, Find) на открытой выдаче Google
+    log("--- find in page ---")
+    c.eval("window.openFind()")
+    time.sleep(0.6)
+    c.eval("(function(){var i=document.getElementById('findInput');i.value='Google';i.dispatchEvent(new Event('input',{bubbles:true}));})()")
+    time.sleep(2.5)
+    log("find cnt:", c.eval("document.getElementById('findCnt').textContent"),
+        "| snap:", c.eval("!!document.getElementById('shSnap')"))
+    c.eval("document.querySelector('[data-act=findNext]').click()")
+    time.sleep(1)
+    log("find cnt after next:", c.eval("document.getElementById('findCnt').textContent"))
+    os_shot(f"{out}/os-find.png")
+    c.eval("document.querySelector('[data-act=findClose]').click()")
+    time.sleep(1)
+    log("find closed, hidden:", c.eval("document.getElementById('findbar').hidden"))
     os_shot(f"{out}/os-search.png")
     c.shot(f"{out}/ui-search.png")
     # настоящие клики мышью ОС (cliclick, только macOS): проверяем, что UI реагирует на ввод,

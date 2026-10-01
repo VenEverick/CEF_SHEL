@@ -103,6 +103,8 @@ class Shell {
   void OnTabLoading(CefRefPtr<CefBrowser> browser, bool loading);
   void OnTabNewWindow(CefRefPtr<CefBrowser> browser, const std::string& url);
   bool OnTabKey(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event);
+  void OnTabFindResult(CefRefPtr<CefBrowser> browser, int count, int idx,
+                       bool final_update);
   void OnTabContextMenu(CefRefPtr<CefBrowser> browser,
                         CefRefPtr<CefFrame> frame,
                         CefRefPtr<CefContextMenuParams> params);

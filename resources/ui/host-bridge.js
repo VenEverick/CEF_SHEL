@@ -64,7 +64,15 @@
     var v = byId('viewport');
     if (!v) return null;
     var r = v.getBoundingClientRect();
-    return { x: r.left, y: r.top, w: r.width, h: r.height };
+    var o = { x: r.left, y: r.top, w: r.width, h: r.height };
+    // Панель поиска (HTML) лежит поверх области вида — освобождаем ей место сверху.
+    var fb = byId('findbar');
+    if (st.visible && fb && !fb.hidden) {
+      var fr = fb.getBoundingClientRect();
+      var cut = fr.bottom + 6 - o.y;
+      if (fr.height > 0 && cut > 0 && cut < o.h - 40) { o.y += cut; o.h -= cut; }
+    }
+    return o;
   }
   function rectKey(r) { return r ? [r.x, r.y, r.w, r.h].map(Math.round).join(',') : ''; }
   function editableFocused() {
@@ -308,6 +316,12 @@
         point: { x: vp.x + (p.x || 0), y: vp.y + (p.y || 0) }
       });
     },
+    found: function (p) {
+      if (p.id !== st.tabId || !st.visible) return;
+      var c = byId('findCnt'), i = byId('findInput');
+      if (!c || !i || !i.value.trim()) return;
+      c.textContent = p.count > 0 ? (p.idx + ' / ' + p.count) : '0 / 0';
+    },
     dlprompt: function (p) { if (cbs.dlprompt) cbs.dlprompt(p); },
     download: function (p) { if (typeof window.shelterDownload === 'function') window.shelterDownload(p); }
   };
@@ -338,8 +352,53 @@
     }
   }, true);
 
+    /* ---------- поиск по странице нативной вкладки ---------- */
+  var findTimer = 0;
+  function nativeFind(next, forward) {
+    var i = byId('findInput');
+    if (!i) return;
+    q('find', { id: st.tabId, q: i.value, next: !!next, forward: forward !== false });
+    var c = byId('findCnt');
+    if (c && !i.value.trim()) c.textContent = '';
+  }
+  document.addEventListener('input', function (e) {
+    if (!st.visible || !e.target || e.target.id !== 'findInput') return;
+    e.stopImmediatePropagation();
+    clearTimeout(findTimer);
+    findTimer = setTimeout(function () { nativeFind(false, true); }, 120);
+  }, true);
+  document.addEventListener('keydown', function (e) {
+    if (!st.visible || !e.target || e.target.id !== 'findInput' || e.key !== 'Enter') return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    nativeFind(true, !e.shiftKey);
+  }, true);
+  document.addEventListener('click', function (e) {
+    if (!st.visible || !e.target || !e.target.closest) return;
+    var b = e.target.closest('[data-act="findPrev"],[data-act="findNext"]');
+    if (!b) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    nativeFind(true, b.getAttribute('data-act') === 'findNext');
+  }, true);
+  var lastFindHidden = true;
+  function watchFindbar() {
+    var fb = byId('findbar');
+    if (!fb) return;
+    lastFindHidden = fb.hidden;
+    new MutationObserver(function () {
+      if (fb.hidden === lastFindHidden) return;
+      lastFindHidden = fb.hidden;
+      st.lastRect = '';
+      if (fb.hidden) q('find', { id: st.tabId, act: 'stop' });
+      else if (st.visible) { var i = byId('findInput'); if (i && i.value.trim()) nativeFind(false, true); }
+      relayout();
+    }).observe(fb, { attributes: true, attributeFilter: ['hidden'] });
+  }
+
   /* ---------- наблюдатели ---------- */
   function startObservers() {
+    watchFindbar();
     var vp = byId('viewport');
     if (window.ResizeObserver && vp) new ResizeObserver(relayout).observe(vp);
     window.addEventListener('resize', relayout);

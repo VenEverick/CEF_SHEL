@@ -461,6 +461,15 @@ void Shell::OnTabNewWindow(CefRefPtr<CefBrowser> browser, const std::string& url
                         JsString(t ? t->id : "") + "}");
 }
 
+void Shell::OnTabFindResult(CefRefPtr<CefBrowser> browser, int count, int idx,
+                            bool /*final_update*/) {
+  Tab* t = FindTabByBrowser(browser->GetIdentifier());
+  if (!t) return;
+  UiEvent("found", "{\"id\":" + JsString(t->id) + ",\"count\":" +
+                       std::to_string(count) + ",\"idx\":" +
+                       std::to_string(idx) + "}");
+}
+
 bool Shell::OnTabKey(CefRefPtr<CefBrowser> browser, const CefKeyEvent& e) {
   std::string code, key;
   if (!MapKeyEvent(e, &code, &key)) return false;
