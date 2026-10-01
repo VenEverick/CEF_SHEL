@@ -112,5 +112,7 @@ bool ClipboardWrite(const std::string& text) {
 
 void SetColorScheme(bool /*dark*/) {}
 
+std::string DebugHitTest(double, double) { return std::string(); }
+
 }  // namespace platform
 }  // namespace shelter

@@ -299,6 +299,10 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
                  cb);
     return true;
   }
+  if (m == "dbg.hit") {  // диагностика hitTest (macOS), только для CI
+    cb->Success(JsString(platform::DebugHitTest(Num(a, "x", 0), Num(a, "y", 0))));
+    return true;
+  }
   if (m == "auth.window") {  // TODO(этап 3): окно входа SHELTER ID
     cb->Success("{\"ok\":false}");
     return true;

@@ -29,6 +29,9 @@ bool ClipboardWrite(const std::string& text);
 // Светлая/тёмная схема нативных элементов (macOS: NSAppearance).
 void SetColorScheme(bool dark);
 
+// Диагностика (macOS): результат hitTest окон приложения в точке (x, y) окна, DIP от верхнего левого угла.
+std::string DebugHitTest(double x, double y);
+
 }  // namespace platform
 }  // namespace shelter
 

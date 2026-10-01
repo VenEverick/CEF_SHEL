@@ -55,5 +55,32 @@ void SetColorScheme(bool dark) {
   [NSApp setAppearance:a];
 }
 
+
+static void DumpView(NSView* v, int depth, NSMutableString* out) {
+  if (!v || depth > 5) return;
+  NSRect f = v.frame;
+  [out appendFormat:@"%*s%@ (%.0f,%.0f %.0fx%.0f)%@\n", depth * 2, "", NSStringFromClass([v class]),
+                    f.origin.x, f.origin.y, f.size.width, f.size.height, v.hidden ? @" HIDDEN" : @""];
+  for (NSView* c in v.subviews) DumpView(c, depth + 1, out);
+}
+
+std::string DebugHitTest(double x, double y) {
+  NSMutableString* out = [NSMutableString string];
+  for (NSWindow* w in [NSApp windows]) {
+    NSView* cv = w.contentView;
+    if (!cv || !w.visible) continue;
+    NSRect wf = w.frame;
+    NSPoint p = NSMakePoint(x, wf.size.height - y);
+    NSView* hit = [cv hitTest:p];
+    [out appendFormat:@"WINDOW %@ frame(%.0f,%.0f %.0fx%.0f) key=%d main=%d level=%ld parent=%@ children=%lu hit=%@ hitFrame=%@\n",
+                      NSStringFromClass([w class]), wf.origin.x, wf.origin.y, wf.size.width, wf.size.height,
+                      (int)w.isKeyWindow, (int)w.isMainWindow, (long)w.level, w.parentWindow ? @"yes" : @"no",
+                      (unsigned long)w.childWindows.count, hit ? NSStringFromClass([hit class]) : @"nil",
+                      hit ? NSStringFromRect(hit.frame) : @""];
+    DumpView(cv, 1, out);
+  }
+  return std::string([out UTF8String]);
+}
+
 }  // namespace platform
 }  // namespace shelter

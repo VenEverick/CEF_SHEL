@@ -23,5 +23,6 @@ namespace shelter {
 namespace platform {
 std::string ClipboardRead() { return std::string(); }
 bool ClipboardWrite(const std::string&) { return false; }
+std::string DebugHitTest(double, double) { return std::string(); }
 }  // namespace platform
 }  // namespace shelter

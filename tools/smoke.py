@@ -73,6 +73,13 @@ class Cdp:
         return bool(data)
 
 
+def unq(r):
+    try:
+        return json.loads(r)
+    except Exception:
+        return str(r)
+
+
 def os_shot(path):
     path = os.path.abspath(path)
     try:
@@ -132,6 +139,8 @@ try:
         log(f"   -> active tab url: {active_url()}")
     if shutil.which("cliclick"):
         log("--- control: real click on bare UI (no native view) ---")
+        r0 = c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.hit',a:{x:130,y:332}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})", True)
+        log("hit-test control sidebar (130,332):\n" + unq(r0)[:4000])
         real_click("document.querySelector('.ni[data-page=bookmarks]')", "sidebar bookmarks (control)")
         real_click("document.querySelector('.ni[data-page=start]')", "sidebar start (control)")
 
@@ -216,6 +225,9 @@ try:
             time.sleep(1.5)
             log(f"probe {label} @{int(d['x'])},{int(d['y'])}: ui={c.eval('JSON.stringify(window.__clicks)')} page={pc.eval('JSON.stringify(window.__clicks)') if pc else None} uiFocus={c.eval('document.hasFocus()')}")
         log("app-regions:", c.eval("""(function(){var out=[];document.querySelectorAll('body, body *').forEach(function(e){var v=getComputedStyle(e).webkitAppRegion; if(v&&v!=='none'){var b=e.getBoundingClientRect(); out.push((e.id||e.className||e.tagName).toString().slice(0,30)+':'+v+':'+[b.x,b.y,b.width,b.height].map(Math.round).join(','))}}); return JSON.stringify(out.slice(0,60))})()"""))
+        for lab, (hx, hy) in (("sidebar", (130, 332)), ("viewport", (850, 467))):
+            r = c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.hit',a:{x:%d,y:%d}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})" % (hx, hy), True)
+            log(f"hit-test {lab} ({hx},{hy}):\n" + unq(r)[:4000])
         probe("sidebar bookmarks", "document.querySelector('.ni[data-page=bookmarks]')")
         probe("toolbar back", "document.getElementById('btnBack')")
         probe("omnibox", "document.getElementById('omniInput')")
