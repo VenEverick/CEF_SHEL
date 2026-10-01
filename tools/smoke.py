@@ -285,6 +285,21 @@ try:
                 self.send_header("Content-Disposition", 'attachment; filename="shelter-test.bin"')
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers(); self.wfile.write(body); return
+            if self.path.startswith("/mark"):
+                m = self.path.split("m=")[-1].split("&")[0]
+                body = ("<!doctype html><title>Mark</title><h1>%s</h1><script>try{localStorage.setItem('mk','%s')}catch(e){}</script>" % (m, m)).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html")
+                self.send_header("Cache-Control", "public, max-age=3600")
+                self.send_header("Set-Cookie", "gm=%s; Max-Age=86400; Path=/" % m)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers(); self.wfile.write(body); return
+            if self.path.startswith("/dl"):
+                body = b"<!doctype html><title>DL</title><a id=a1 href=/file.bin style='display:block;margin:40px;font-size:30px'>download-link</a><a id=a2 download=blob.txt href=# onclick=\"var b=new Blob(['blob-data-1234567890'],{type:'text/plain'});this.href=URL.createObjectURL(b)\" style='display:block;margin:40px;font-size:30px'>blob-link</a>"
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers(); self.wfile.write(body); return
             body = ("<!doctype html><title>Page %s</title><h1>Page %s</h1><p>needle needle needle</p>" % (self.path, self.path)).encode()
             self.send_response(200)
             self.send_header("Content-Type", "text/html")
@@ -333,12 +348,124 @@ try:
     time.sleep(4)
     log("download file exists:", os.path.exists(target), os.path.getsize(target) if os.path.exists(target) else -1, "dir:", dl_dir)
     log("tabs after download:", tabs_desc())
+    # --- масштаб при переходе на другой хост (Chromium хранит зум «по хосту») ---
+    log("--- zoom across origins ---")
+    def page_eval(sub, expr):
+        pgx = next((t for t in targets() if t.get("type") == "page" and sub in t.get("url", "")), None)
+        if not pgx: return None
+        try:
+            cc = Cdp(pgx["webSocketDebuggerUrl"]); r = cc.eval(expr); cc.ws.close(); return r
+        except Exception as e:
+            return "ERR %s" % e
+    log("zoom: base innerWidth p2:", page_eval("127.0.0.1:8765/p2", "window.innerWidth"))
+    c.eval("window.shelterSetZoomAll(1.5)"); time.sleep(1.5)
+    log("zoom 1.5 same host p2:", page_eval("127.0.0.1:8765/p2", "window.innerWidth"))
+    c.eval("window.navigate('http://localhost:8765/p3')"); time.sleep(4)
+    log("zoom 1.5 other host p3 (expect ~base/1.5):", page_eval("localhost:8765/p3", "window.innerWidth"))
+    c.eval("window.navigate('http://127.0.0.1:8765/p4')"); time.sleep(4)
+    log("zoom 1.5 back to first host p4 (expect ~base/1.5):", page_eval("127.0.0.1:8765/p4", "window.innerWidth"))
+    c.eval("window.shelterSetZoomAll(1)"); time.sleep(1)
+    log("zoom reset p4:", page_eval("127.0.0.1:8765/p4", "window.innerWidth"))
+
+    # --- «дыры» вместо снимков: подсказка, уведомление, подсказки омнибокса над страницей ---
+    log("--- overlays over live page (holes) ---")
+    log("perf before:", c.eval("JSON.stringify(window.__shPerf)"))
+    c.eval("window.toast('Проверка уведомления над страницей',{icon:'info'})"); time.sleep(0.9)
+    log("toast: snap =", c.eval("!!document.getElementById('shSnap')"), "| clip =", c.eval("window.__shClip()"))
+    os_shot(f"{out}/os-toast.png")
+    time.sleep(5)
+    log("after toast: clip =", c.eval("window.__shClip()"))
+    if shutil.which("cliclick"):
+        d = json.loads(c.eval("(function(){var b=document.getElementById('btnBack').getBoundingClientRect();return JSON.stringify({x:window.screenX+b.x+b.width/2,y:window.screenY+b.y+b.height/2})})()"))
+        subprocess.run(["cliclick", f"m:{int(d['x'])},{int(d['y'])}"])
+        time.sleep(0.4)
+        subprocess.run(["cliclick", f"m:{int(d['x'])+2},{int(d['y'])+1}"])
+    else:
+        c.eval("(function(){var b=document.getElementById('btnBack'); ['pointerover','mouseover','mouseenter','pointerenter'].forEach(function(n){b.dispatchEvent(new MouseEvent(n,{bubbles:true}))})})()")
+    time.sleep(1.6)
+    log("tip shown:", c.eval("!!document.querySelector('.tip')"), "| snap =", c.eval("!!document.getElementById('shSnap')"), "| clip =", c.eval("window.__shClip()"))
+    os_shot(f"{out}/os-tip.png")
+    # подсказки омнибокса
+    c.eval("(function(){var i=document.getElementById('omniInput'); i.focus(); i.value='goo'; i.dispatchEvent(new Event('input',{bubbles:true}));})()")
+    time.sleep(1.2)
+    log("suggest shown:", c.eval("!!document.querySelector('#tbSuggest:not([hidden])')"), "| snap =", c.eval("!!document.getElementById('shSnap')"), "| clip =", c.eval("window.__shClip()"))
+    os_shot(f"{out}/os-suggest.png")
+    if shutil.which("cliclick"):
+        before = active_url()
+        real_click("document.querySelector('#tbSuggest > *:nth-child(2)') || document.querySelector('#tbSuggest > *')", "suggest item (click through hole)")
+        log("suggest click changed url:", before != active_url(), "|", before, "->", active_url())
+    c.eval("document.getElementById('omniInput').blur()")
+    time.sleep(0.5)
+    log("perf after:", c.eval("JSON.stringify(window.__shPerf)"))
+
+    # --- скачивание по ссылке со страницы (жест пользователя, как на реальных сайтах) ---
+    log("--- download via page link click ---")
+    c.eval("window.navigate('http://127.0.0.1:8765/dl')"); time.sleep(4)
+    pgd = next((t for t in targets() if t.get("type") == "page" and "8765/dl" in t.get("url", "")), None)
+    if pgd:
+        pd_ = Cdp(pgd["webSocketDebuggerUrl"])
+        for lbl, sel in (("file link", "a1"), ("blob link", "a2")):
+            if os.path.exists(target): os.remove(target)
+            xy = json.loads(pd_.eval("(function(){var b=document.getElementById('%s').getBoundingClientRect();return JSON.stringify({x:b.x+20,y:b.y+b.height/2})})()" % sel))
+            for ty in ("mouseMoved", "mousePressed", "mouseReleased"):
+                pd_.call("Input.dispatchMouseEvent", {"type": ty, "x": xy["x"], "y": xy["y"], "button": "left", "clickCount": 1})
+            time.sleep(3)
+            log(f"{lbl}: prompt =", c.eval("!!document.querySelector('[data-dlp=save]')"))
+            if shutil.which("cliclick"):
+                real_click("document.querySelector('[data-dlp=save]')", f"{lbl}: real click on Save")
+            else:
+                c.eval("(function(){var b=document.querySelector('[data-dlp=save]'); if(b) b.click();})()")
+            time.sleep(3)
+            log(f"{lbl}: prompt still open =", c.eval("!!document.querySelector('[data-dlp=save]')"),
+                "| file.bin exists =", os.path.exists(target), "| tabs:", tabs_desc())
+            c.eval("(function(){var b=document.querySelector('[data-dlp=cancel]'); if(b) b.click();})()")
+            time.sleep(1)
+        pd_.ws.close()
+    else:
+        log("download page target not found")
+    try:
+        sl = os.path.expanduser("~/Library/Application Support/SHELTER/shelter.log") if platform.system() == "Darwin" else os.path.join(os.environ.get("LOCALAPPDATA", ""), "SHELTER", "shelter.log")
+        log("--- shelter.log ---"); log(open(sl, encoding="utf-8", errors="replace").read()[-3000:])
+    except Exception as e:
+        log("shelter.log unavailable:", e)
+
     # закрытие вкладки
     n0 = c.eval("(window.getSpaceTabs()||[]).length")
     c.eval("window.closeTab(window.getActiveTabId())")
     time.sleep(2.5)
     log("tabs before/after close:", n0, c.eval("(window.getSpaceTabs()||[]).length"), "| active:", tabs_desc())
     os_shot(f"{out}/os-func.png")
+
+    # --- «Призрак»: ничего не должно попасть на диск (контроль: обычное пространство) ---
+    log("--- ghost: disk leak check ---")
+    import uuid
+    mp, mg = "PERSISTMARK" + uuid.uuid4().hex[:12], "GHOSTMARK" + uuid.uuid4().hex[:12]
+    c.eval("window.newTab('http://127.0.0.1:8765/mark?m=%s')" % mp); time.sleep(4)
+    c.eval("window.shelter.ghost()"); time.sleep(1.5)
+    log("ghost on:", c.eval("localStorage.getItem('shelter:ghost')"))
+    c.eval("window.newTab('http://127.0.0.1:8765/mark?m=%s')" % mg); time.sleep(5)
+    log("ghost tab:", tabs_desc())
+    log("page marker (ghost tab):", page_eval("mark?m=" + mg, "document.body.innerText"))
+    time.sleep(10)  # даём сбросить кеш/историю/localStorage на диск
+    c.eval("window.shelterSetZoomAll(1)")
+    udir = os.path.expanduser("~/Library/Application Support/SHELTER") if platform.system() == "Darwin" else os.path.join(os.environ.get("LOCALAPPDATA", ""), "SHELTER")
+    hits = {mp: [], mg: []}
+    nfiles = 0
+    for root_, _, files_ in os.walk(udir):
+        for fn in files_:
+            fp = os.path.join(root_, fn)
+            try:
+                if os.path.getsize(fp) > 300 * 1024 * 1024: continue
+                data = open(fp, "rb").read()
+            except Exception:
+                continue
+            nfiles += 1
+            for m_ in (mp, mg):
+                if m_.encode() in data or m_.encode("utf-16le") in data:
+                    hits[m_].append(os.path.relpath(fp, udir))
+    log("files scanned:", nfiles, "in", udir)
+    log("CONTROL (persistent space) marker found in:", hits[mp][:10] or "NOT FOUND")
+    log("GHOST marker found on disk in:", hits[mg][:10] or "nothing (OK)")
 
     # ошибки консоли UI
     c.drain(1)

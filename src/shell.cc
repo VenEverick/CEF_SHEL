@@ -182,6 +182,7 @@ void Shell::OnWindowCreated(CefRefPtr<CefWindow> window) {
   if (layout) layout->SetFlexForView(ui_view_, 1);
   window_->Show();
   ui_view_->RequestFocus();
+  platform::InstallInputFixes();
 }
 
 bool Shell::CanCloseWindow() {
@@ -397,6 +398,28 @@ void Shell::LayoutTab(Tab* tab, const CefRect& rect, bool visible) {
     last_rect_ = rect;
   }
   tab->overlay->SetVisible(visible && last_rect_.width > 0);
+  ApplyClip(tab);
+}
+
+void Shell::ApplyClip(Tab* tab) {
+  if (!tab || !tab->browser || !tab->overlay || !tab->overlay->IsValid()) return;
+  void* h = reinterpret_cast<void*>(tab->browser->GetHost()->GetWindowHandle());
+  if (!h || last_rect_.width <= 0 || last_rect_.height <= 0) return;
+  platform::ApplyViewClip(h, clip_radii_, clip_holes_, last_rect_.width,
+                          last_rect_.height);
+}
+
+void Shell::Log(const std::string& line) {
+  std::ofstream f(fs::path(platform::UserDataDir()) / "shelter.log", std::ios::app);
+  if (f) f << line << "\n";
+}
+
+void Shell::ReapplyZoom(CefRefPtr<CefBrowser> browser) {
+  // Масштаб в Chromium хранится «по хосту»: после перехода на другой сайт он сбрасывается.
+  if (!browser) return;
+  const double level = std::log(zoom_) / std::log(1.2);
+  if (std::fabs(browser->GetHost()->GetZoomLevel() - level) > 0.01)
+    browser->GetHost()->SetZoomLevel(level);
 }
 
 CefRefPtr<CefBrowser> Shell::ActiveBrowser() {
@@ -435,6 +458,7 @@ void Shell::OnTabAddress(CefRefPtr<CefBrowser> browser, const std::string& url) 
   if (!t->error_url.empty() && url.rfind("data:", 0) == 0) return;
   if (url.rfind("data:text/html", 0) != 0) t->error_url.clear();
   t->current_url = url;
+  ReapplyZoom(browser);
   if (SameUrl(url, t->requested_url)) return;
   t->requested_url = url;
   UiEvent("nav", "{\"id\":" + JsString(t->id) + ",\"url\":" + JsString(url) + "}");
@@ -451,6 +475,7 @@ void Shell::OnTabLoading(CefRefPtr<CefBrowser> browser, bool loading) {
   Tab* t = FindTabByBrowser(browser->GetIdentifier());
   if (!t) return;
   t->loading = loading;
+  ReapplyZoom(browser);
   UiEvent("loading", "{\"id\":" + JsString(t->id) + ",\"loading\":" +
                          (loading ? "true" : "false") + "}");
 }
@@ -594,6 +619,8 @@ void Shell::OnTabDownloadBefore(CefRefPtr<CefBrowser> browser,
   const std::string id = "dl" + std::to_string(item->GetId());
   std::string name = suggested_name.empty() ? "download" : suggested_name;
   pending_downloads_[id] = {callback, name};
+  Log("download before id=" + id + " name=" + name + " url=" + item->GetURL().ToString() +
+      " size=" + std::to_string(item->GetTotalBytes()));
 
   // Навигация по ссылке-загрузке не меняет страницу: возвращаем UI реальный адрес вкладки.
   if (Tab* t = FindTabByBrowser(browser->GetIdentifier())) {
@@ -620,8 +647,10 @@ void Shell::DownloadDecision(const std::string& id, const std::string& action) {
   if (action == "save" || action == "saveAs") {
     std::error_code ec;
     fs::create_directories(platform::DownloadsDir(), ec);
-    pd.callback->Continue(UniquePath(platform::DownloadsDir(), pd.filename),
-                          action == "saveAs");
+    const std::string path = UniquePath(platform::DownloadsDir(), pd.filename);
+    Log("download decision id=" + id + " action=" + action + " path=" + path +
+        (ec ? " mkdir_error=" + ec.message() : std::string()));
+    pd.callback->Continue(path, action == "saveAs");
   }
   // "cancel": callback освобождается без Continue — загрузка отменяется.
 }
@@ -638,6 +667,10 @@ void Shell::OnTabDownloadUpdated(CefRefPtr<CefDownloadItem> item) {
   }
   std::string name = item->GetSuggestedFileName().ToString();
   const std::string path = item->GetFullPath().ToString();
+  if (state != "progressing")
+    Log("download update id=" + id + " state=" + state + " bytes=" +
+        std::to_string(item->GetReceivedBytes()) + " reason=" +
+        std::to_string(static_cast<int>(item->GetInterruptReason())) + " path=" + path);
   if (name.empty() && !path.empty()) name = fs::path(path).filename().string();
   if (name.empty()) name = "download";
 

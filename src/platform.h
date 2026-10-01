@@ -2,7 +2,9 @@
 #ifndef SHELTER_PLATFORM_H_
 #define SHELTER_PLATFORM_H_
 
+#include <array>
 #include <string>
+#include <vector>
 
 namespace shelter {
 namespace platform {
@@ -28,6 +30,16 @@ bool ClipboardWrite(const std::string& text);
 
 // Светлая/тёмная схема нативных элементов (macOS: NSAppearance).
 void SetColorScheme(bool dark);
+
+// Скругление углов и «дыры» (прозрачные участки) нативного вида вкладки.
+// handle — CefBrowserHost::GetWindowHandle(); radii = {tl, tr, br, bl} и holes {x, y, w, h}
+// задаются в DIP относительно вида вкладки (размер view_w x view_h DIP).
+void ApplyViewClip(void* handle, const double radii[4],
+                   const std::vector<std::array<int, 4>>& holes, int view_w,
+                   int view_h);
+
+// macOS: первый клик по неактивному окну приложения не должен «съедаться».
+void InstallInputFixes();
 
 // Мастер-ключ секретов UI: 32 байта в hex (создаётся при первом запуске).
 std::string SecretKeyHex();

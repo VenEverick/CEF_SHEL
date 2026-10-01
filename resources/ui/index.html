@@ -3232,11 +3232,20 @@ function flushVisits() {
   try { store.put('shelter:visits', S.visits.slice(-4000)); } catch (_) {}
   _visitsAt = Date.now(); _visitsDirty = false;
 }
+/* «Призрак»: вкладки режима (адреса, заголовки) не должны попадать на диск вместе с состоянием UI. */
+function spacesForDisk() {
+  const out = {};
+  for (const k of Object.keys(S.spaces)) {
+    const sp = S.spaces[k], all = sp.tabs || [], tabs = all.filter(t => !(t && t.ghost));
+    out[k] = tabs.length === all.length ? sp : Object.assign({}, sp, { tabs: tabs.length ? tabs : [newTabObj('shelter.dev/start', { ghost: false })] });
+  }
+  return out;
+}
 function saveNow() {
   store.set('shelter:theme', S.theme);
   store.set('shelter:ghost', S.ghost ? '1' : '0');
   store.set('shelter:searchEngine', S.engine);
-  store.put('shelter:spaces', S.spaces);
+  store.put('shelter:spaces', spacesForDisk());
   store.set('shelter:currentSpace', S.currentSpace);
   store.set('shelter:activeTabId', S.activeTabId || '');
   store.put('shelter:bookmarks', S.bookmarks);
@@ -5018,11 +5027,26 @@ async function fire() {
   if (!REDUCED()) $('#stage').animate([{ filter: 'brightness(1)' }, { filter: 'brightness(1.25) saturate(1.2)' }, { filter: 'brightness(1)' }], { duration: 600, easing: 'ease-out' });
   toast(keep.length ? (wipe.length ? 'Сессии удалены. Защищённые пространства сохранены.' : 'Защищённые пространства не тронуты.') : 'Сессии удалены. Никаких следов.', { icon: 'flame' });
 }
-function addBookmark(url, title) {
-  if (S.bookmarks.some(b => sameUrl(b.url, url))) { toast('Уже в закладках', { icon: 'star' }); return; }
-  S.bookmarks.push({ id: uid('b'), title: title || urlMeta(url).title, url }); persist();
+function addBookmark(url, title, toPanel) {
+  const dup = S.bookmarks.find(b => sameUrl(b.url, url));
+  if (dup) {
+    /* уже есть: если добавляли с панели — вернуть её на панель */
+    if (toPanel && dup.hide) { delete dup.hide; persist(); renderBadges(); renderHeroLinks(); refreshPage('bookmarks'); toast('Показано на экспресс-панели', { icon: 'star' }); return; }
+    toast('Уже в закладках', { icon: 'star' }); return;
+  }
+  const nb = { id: uid('b'), title: title || urlMeta(url).title, url };
+  if (toPanel) {
+    /* закладка, добавленная с экспресс-панели, должна появиться именно на панели */
+    const vis = S.bookmarks.filter(b => !b.hide);
+    let n = S.ui.bmShow || 6;
+    if (vis.length >= n) {
+      if (n < 15) { n = vis.length + 1 <= 10 ? 10 : 15; S.ui.bmShow = n; S.bookmarks.push(nb); }
+      else { S.bookmarks.splice(S.bookmarks.indexOf(vis[n - 1]), 0, nb); }
+    } else S.bookmarks.push(nb);
+  } else S.bookmarks.push(nb);
+  persist();
   renderBadges(); updateToolbar(); renderHeroLinks(); refreshPage('bookmarks');
-  toast('Добавлено в закладки', { icon: 'star' });
+  toast(toPanel ? 'Добавлено на экспресс-панель' : 'Добавлено в закладки', { icon: 'star' });
 }
 function toggleBookmarkCurrent() {
   const t = curTab(), m = urlMeta(t.url); if (m.kind === 'internal') return;
@@ -5032,10 +5056,10 @@ function toggleBookmarkCurrent() {
   persist(); renderBadges(); updateToolbar(); renderHeroLinks();
   if (!REDUCED()) $('#starBtn').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.35) rotate(-12deg)' }, { transform: 'scale(1)' }], { duration: 480, easing: 'cubic-bezier(.34,1.45,.64,1)' });
 }
-async function addBookmarkDlg() {
+async function addBookmarkDlg(toPanel) {
   const url = await promptDlg({ title: 'Новая закладка', label: 'Адрес сайта', placeholder: 'например, habr.com', ok: 'Добавить' });
   if (!url) return; const u = resolveInput(url); if (!u || !isUrl(url)) { toast('Похоже, это не адрес', { icon: 'info' }); return; }
-  addBookmark(u, urlMeta(u).title);
+  addBookmark(u, urlMeta(u).title, !!toPanel);
 }
 
 /* =========================================================
@@ -7856,7 +7880,7 @@ const ACT = {
   stop: () => { try { if (window.shelterStopLoad) window.shelterStopLoad(); } catch (_) {} setStopUI(false); },
   cert: el => certPop(el), star: () => toggleBookmarkCurrent(), shield: el => shieldPop(el), more: el => moreMenu(el), quick: el => quickPanel(el), ghost: () => toggleGhost(), fire: () => fire(),
   heroMode: el => heroModeMenu(el), heroEngine: el => engineMenu(el), heroSend: () => heroSubmit(),
-  open: (el, e) => navigate(el.dataset.url, { newTab: e.metaKey || e.ctrlKey }), addBookmarkDlg: () => addBookmarkDlg(),
+  open: (el, e) => navigate(el.dataset.url, { newTab: e.metaKey || e.ctrlKey }), addBookmarkDlg: el => addBookmarkDlg(!!(el && el.closest && el.closest('#heroLinks'))),
   findPrev: () => findStep(-1), findNext: () => findStep(1), findClose: () => closeFind(), devtools: () => toggleDevtools(false), devtoolsClose: () => toggleDevtools(false), deviceOff: () => setDevice('desktop'),
   dashExport: () => dashExport(),
   histDay: el => histSelectDay(el.dataset.day), histMonth: el => histMonth(+el.dataset.d), histClear: el => histClearMenu(el), histMenuMore: el => histMoreMenu(el), cbdOpen: () => clearBrowsingDlg(), visMenu: el => visMenu(el),

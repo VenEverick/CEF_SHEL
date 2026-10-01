@@ -24,5 +24,7 @@ namespace platform {
 std::string ClipboardRead() { return std::string(); }
 bool ClipboardWrite(const std::string&) { return false; }
 std::string DebugHitTest(double, double) { return std::string(); }
+void ApplyViewClip(void*, const double[4], const std::vector<std::array<int, 4>>&, int, int) {}
+void InstallInputFixes() {}
 }  // namespace platform
 }  // namespace shelter

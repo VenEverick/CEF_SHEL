@@ -225,15 +225,27 @@
   /* ---------- стили ---------- */
   var style = document.createElement('style');
   style.textContent =
-    '.sh-snap-wait .menu,.sh-snap-wait .scrim,.sh-snap-wait #toasts,.sh-snap-wait .suggest{visibility:hidden!important}' +
+    '.sh-snap-wait .menu,.sh-snap-wait .scrim{visibility:hidden!important}' +
     '#shSnap{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:fill;pointer-events:none;z-index:3;background:#fff}' +
     (PLATFORM === 'darwin' ? '#winLights{visibility:hidden!important}' : '');
   (document.head || root).appendChild(style);
   root.classList.add('host-' + PLATFORM);
 
   /* ---------- снимок вместо нативного вида ---------- */
-  var OVERLAY_SEL = '.menu:not(.closing),.scrim:not(.closing),#toasts>.toast:not(.out),' +
-    '.suggest:not([hidden]),#findbar:not([hidden]),#dlFloat:not([hidden])';
+  /* Модальные/интерактивные слои, которым нужен снимок вместо нативного вида: меню, модалки. */
+  var OVERLAY_SEL = '.menu:not(.closing),.scrim:not(.closing),.call:not([hidden]),#findbar:not([hidden])';
+  /* Лёгкие слои (подсказки, уведомления, подсказки омнибокса, панель загрузок) показываются через
+     «дыры» в нативном виде вкладки: страница остаётся живой, без снимков и подвисаний. */
+  var HOLE_SEL = '.tip,#toasts>.toast,.suggest:not([hidden]),#dlFloat:not([hidden])';
+
+  /* ---------- замеры ---------- */
+  var perf = window.__shPerf = { freezes: 0, thaws: 0, snapMs: [], snapKB: [], freezeMs: [], thawMs: [], holes: 0, clips: 0, longTasks: 0, longMax: 0 };
+  function pushPerf(arr, v) { arr.push(Math.round(v)); if (arr.length > 20) arr.shift(); }
+  try {
+    new PerformanceObserver(function (l) {
+      l.getEntries().forEach(function (e) { perf.longTasks++; if (e.duration > perf.longMax) perf.longMax = Math.round(e.duration); });
+    }).observe({ entryTypes: ['longtask'] });
+  } catch (_) {}
 
   function overlayOverViewport() {
     var vp = vpRect();
@@ -263,15 +275,18 @@
 
   function freeze() {
     st.busy = true;
-    var id = st.tabId;
+    var id = st.tabId, t0 = performance.now(), t1 = 0;
     root.classList.add('sh-snap-wait');
-    qSnap(id, 78, 900).then(function (url) {
+    qSnap(id, 58, 900).then(function (url) {
+      t1 = performance.now();
+      pushPerf(perf.snapMs, t1 - t0); pushPerf(perf.snapKB, (url || '').length / 1024);
       if (url && st.tabId === id) { st.snapUrl = url; st.snapFor = id; showSnap(url); }
       return nextFrames(2);
     }).then(function () {
       st.frozen = true;
       return q('view.hide');
     }).then(function () {
+      perf.freezes++; pushPerf(perf.freezeMs, performance.now() - t0);
       st.busy = false;
       root.classList.remove('sh-snap-wait');
       evaluate();
@@ -279,20 +294,92 @@
   }
   function thaw() {
     st.busy = true;
-    var r = vpRect();
+    var r = vpRect(), tt0 = performance.now();
     q('view.show', { rect: r, focus: !editableFocused() }).then(function () { return nextFrames(2); }).then(function () {
       st.frozen = false;
       dropSnap();
+      perf.thaws++; pushPerf(perf.thawMs, performance.now() - tt0);
       st.busy = false;
+      st.clipKey = '';
       evaluate();
     });
   }
+
+  /* ---------- скругление углов и «дыры» ---------- */
+  function px(v) { v = parseFloat(v); return isNaN(v) ? 0 : v; }
+  function computeRadii(vp) {
+    var v = byId('viewport'), sg = byId('stage');
+    if (!v) return [0, 0, 0, 0];
+    var cv = getComputedStyle(v);
+    var own = [px(cv.borderTopLeftRadius), px(cv.borderTopRightRadius), px(cv.borderBottomRightRadius), px(cv.borderBottomLeftRadius)];
+    var res = own.slice();
+    if (sg) {
+      var cs = getComputedStyle(sg), sr = sg.getBoundingClientRect();
+      var l = sr.left + px(cs.borderLeftWidth), t = sr.top + px(cs.borderTopWidth);
+      var r = sr.right - px(cs.borderRightWidth), b = sr.bottom - px(cs.borderBottomWidth);
+      var sRad = [px(cs.borderTopLeftRadius), px(cs.borderTopRightRadius), px(cs.borderBottomRightRadius), px(cs.borderBottomLeftRadius)];
+      var near = function (a, c) { return Math.abs(a - c) < 2.5; };
+      var hits = [near(vp.x, l) && near(vp.y, t), near(vp.x + vp.w, r) && near(vp.y, t),
+                  near(vp.x + vp.w, r) && near(vp.y + vp.h, b), near(vp.x, l) && near(vp.y + vp.h, b)];
+      for (var i = 0; i < 4; i++) if (hits[i] && own[i] < 1) res[i] = Math.max(0, sRad[i] - 1);
+    }
+    return res.map(function (x) { return Math.round(x * 10) / 10; });
+  }
+  function holeRects(vp) {
+    var out = [], list = document.querySelectorAll(HOLE_SEL), i, j;
+    for (i = 0; i < list.length; i++) {
+      var r = list[i].getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) continue;
+      var x0 = Math.max(Math.floor(r.left) - 3, vp.x), y0 = Math.max(Math.floor(r.top) - 3, vp.y);
+      var x1 = Math.min(Math.ceil(r.right) + 3, vp.x + vp.w), y1 = Math.min(Math.ceil(r.bottom) + 3, vp.y + vp.h);
+      if (x1 <= x0 || y1 <= y0) continue;
+      out.push([x0, y0, x1, y1]);
+    }
+    /* объединяем пересекающиеся прямоугольники (иначе even-odd вырежет «пересечение» обратно) */
+    var merged = true;
+    while (merged) {
+      merged = false;
+      for (i = 0; i < out.length && !merged; i++) for (j = i + 1; j < out.length && !merged; j++) {
+        var a = out[i], b = out[j];
+        if (a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3]) {
+          out[i] = [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])];
+          out.splice(j, 1); merged = true;
+        }
+      }
+    }
+    return out.map(function (a) { return [Math.round(a[0] - vp.x), Math.round(a[1] - vp.y), Math.round(a[2] - a[0]), Math.round(a[3] - a[1])]; });
+  }
+  function syncClip() {
+    if (!st.visible || st.frozen || st.busy) return 0;
+    var vp = vpRect();
+    if (!vp || vp.w < 2) return 0;
+    var rad = computeRadii(vp), holes = holeRects(vp);
+    var key = rad.join(',') + '|' + holes.join(';');
+    if (key !== st.clipKey) {
+      st.clipKey = key; perf.clips++; perf.holes = holes.length;
+      q('view.clip', { radii: rad, holes: holes });
+    }
+    return holes.length;
+  }
+  var clipLoop = false, clipCalm = 0;
+  function clipTick() {
+    var n = syncClip();
+    if (n > 0) clipCalm = 3; else clipCalm--;
+    if (clipCalm > 0) requestAnimationFrame(clipTick); else clipLoop = false;
+  }
+  function kickClip() {
+    clipCalm = Math.max(clipCalm, 3);
+    if (!clipLoop) { clipLoop = true; requestAnimationFrame(clipTick); }
+  }
+  window.__shClip = function () { return st.clipKey || ''; };
+
   function evaluate() {
     if (st.busy) return;
     var need = st.visible && overlayOverViewport();
     if (need && !st.frozen) freeze();
     else if (!need && st.frozen && st.visible) thaw();
     else if (!st.visible && st.frozen) { st.frozen = false; dropSnap(); }
+    kickClip();
   }
   var evalQueued = false;
   function scheduleEval() {
@@ -304,10 +391,12 @@
   /* ---------- раскладка ---------- */
   function relayout() {
     if (!st.visible || st.frozen || st.busy) return;
+    kickClip();
     var r = vpRect();
     var k = rectKey(r);
     if (!r || k === st.lastRect || r.w < 2) return;
     st.lastRect = k;
+    st.clipKey = '';
     q('view.layout', { rect: r, visible: true });
   }
 

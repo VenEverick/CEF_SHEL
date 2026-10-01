@@ -210,6 +210,34 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
     cb->Success("{}");
     return true;
   }
+  if (m == "view.clip") {  // скругление углов и «дыры» (оверлеи UI поверх страницы)
+    for (int i = 0; i < 4; ++i) clip_radii_[i] = 0;
+    clip_holes_.clear();
+    if (a->HasKey("radii") && a->GetType("radii") == VTYPE_LIST) {
+      CefRefPtr<CefListValue> l = a->GetList("radii");
+      for (size_t i = 0; i < 4 && i < l->GetSize(); ++i) {
+        const int ty = l->GetType(i);
+        clip_radii_[i] = ty == VTYPE_DOUBLE ? l->GetDouble(i) : ty == VTYPE_INT ? l->GetInt(i) : 0;
+      }
+    }
+    if (a->HasKey("holes") && a->GetType("holes") == VTYPE_LIST) {
+      CefRefPtr<CefListValue> l = a->GetList("holes");
+      for (size_t i = 0; i < l->GetSize() && i < 16; ++i) {
+        if (l->GetType(i) != VTYPE_LIST) continue;
+        CefRefPtr<CefListValue> r = l->GetList(i);
+        if (r->GetSize() < 4) continue;
+        std::array<int, 4> h{};
+        for (size_t k = 0; k < 4; ++k) {
+          const int ty = r->GetType(k);
+          h[k] = static_cast<int>(std::lround(ty == VTYPE_DOUBLE ? r->GetDouble(k) : ty == VTYPE_INT ? r->GetInt(k) : 0));
+        }
+        clip_holes_.push_back(h);
+      }
+    }
+    ApplyClip(FindTab(active_tab_));
+    cb->Success("{}");
+    return true;
+  }
   if (m == "view.hide") {
     HideAllTabs();
     if (ui_view_) ui_view_->RequestFocus();  // клавиатура — обратно в UI

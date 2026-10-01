@@ -15,6 +15,7 @@
 #ifndef SHELTER_SHELL_H_
 #define SHELTER_SHELL_H_
 
+#include <array>
 #include <map>
 #include <set>
 #include <string>
@@ -139,6 +140,9 @@ class Shell {
   void CaptureSnapshot(const std::string& tab_id, int quality,
                        CefRefPtr<CefMessageRouterBrowserSide::Callback> cb);
   void SetZoomAll(double factor);
+  void ReapplyZoom(CefRefPtr<CefBrowser> browser);
+  void ApplyClip(Tab* tab);
+  void Log(const std::string& line);
   void ClearPrivacy(CefRefPtr<CefListValue> parts,
                     CefRefPtr<CefDictionaryValue> opts,
                     CefRefPtr<CefMessageRouterBrowserSide::Callback> cb);
@@ -157,6 +161,8 @@ class Shell {
   std::string active_tab_;
   CefRect last_rect_;
   double zoom_ = 1.0;
+  double clip_radii_[4] = {0, 0, 0, 0};
+  std::vector<std::array<int, 4>> clip_holes_;
   std::map<std::string, CefRefPtr<CefRequestContext>> contexts_;
   std::map<std::string, PendingDownload> pending_downloads_;
   std::string last_ctx_tab_;

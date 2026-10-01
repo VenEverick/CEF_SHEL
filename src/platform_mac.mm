@@ -1,4 +1,5 @@
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 
 #include "src/platform.h"
 
@@ -56,6 +57,81 @@ void SetColorScheme(bool dark) {
 }
 
 
+static int g_forced_key = 0;
+static id g_mouse_monitor = nil;
+
+void InstallInputFixes() {
+  if (g_mouse_monitor) return;
+  g_mouse_monitor = [NSEvent
+      addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown |
+                                            NSEventMaskOtherMouseDown)
+                                   handler:^NSEvent*(NSEvent* e) {
+                                     NSWindow* w = e.window;
+                                     if (w && w.isVisible && !w.isKeyWindow && w.canBecomeKeyWindow &&
+                                         ![NSApp modalWindow]) {
+                                       NSString* cn = NSStringFromClass([w class]);
+                                       if ([cn containsString:@"NativeWidgetMac"] || [cn hasPrefix:@"Cef"]) {
+                                         // Окно приложения не в фокусе (например, фокус у окна вкладки):
+                                         // делаем его ключевым ДО доставки события, иначе клик тратится
+                                         // на активацию и приходится кликать дважды.
+                                         [w makeKeyWindow];
+                                         g_forced_key++;
+                                       }
+                                     }
+                                     return e;
+                                   }];
+  [g_mouse_monitor retain];
+}
+
+void ApplyViewClip(void* handle, const double radii[4],
+                   const std::vector<std::array<int, 4>>& holes, int view_w, int view_h) {
+  NSView* v = (NSView*)handle;
+  NSWindow* win = v ? v.window : nil;
+  if (!win || !win.contentView) return;
+  NSView* root = win.contentView.superview ? win.contentView.superview : win.contentView;
+  bool any = !holes.empty();
+  for (int i = 0; i < 4; ++i) any = any || radii[i] > 0.5;
+  if (!any) {
+    if (root.layer) root.layer.mask = nil;
+    return;
+  }
+  root.wantsLayer = YES;
+  CALayer* layer = root.layer;
+  if (!layer) return;
+  const CGFloat W = win.contentView.frame.size.width, H = win.contentView.frame.size.height;
+  const CGFloat sx = view_w > 0 ? W / view_w : 1, sy = view_h > 0 ? H / view_h : 1;
+  const CGFloat tl = radii[0] * sx, tr = radii[1] * sx, br = radii[2] * sx, bl = radii[3] * sx;
+
+  // Путь в координатах «сверху вниз», затем переворачиваем под систему координат слоя окна.
+  CGMutablePathRef p = CGPathCreateMutable();
+  CGPathMoveToPoint(p, nullptr, tl, 0);
+  CGPathAddLineToPoint(p, nullptr, W - tr, 0);
+  if (tr > 0) CGPathAddArc(p, nullptr, W - tr, tr, tr, -M_PI_2, 0, false);
+  CGPathAddLineToPoint(p, nullptr, W, H - br);
+  if (br > 0) CGPathAddArc(p, nullptr, W - br, H - br, br, 0, M_PI_2, false);
+  CGPathAddLineToPoint(p, nullptr, bl, H);
+  if (bl > 0) CGPathAddArc(p, nullptr, bl, H - bl, bl, M_PI_2, M_PI, false);
+  CGPathAddLineToPoint(p, nullptr, 0, tl);
+  if (tl > 0) CGPathAddArc(p, nullptr, tl, tl, tl, M_PI, 3 * M_PI_2, false);
+  CGPathCloseSubpath(p);
+  for (const auto& h : holes) {
+    CGPathAddRect(p, nullptr, CGRectMake(h[0] * sx, h[1] * sy, h[2] * sx, h[3] * sy));
+  }
+  CGAffineTransform flip = CGAffineTransformMake(1, 0, 0, -1, 0, H);
+  CGPathRef flipped = CGPathCreateCopyByTransformingPath(p, &flip);
+  CGPathRelease(p);
+
+  CAShapeLayer* mask = [CAShapeLayer layer];
+  mask.frame = layer.bounds;
+  mask.path = flipped;
+  CGColorRef black = CGColorCreateGenericGray(0, 1);
+  mask.fillColor = black;
+  CGColorRelease(black);
+  mask.fillRule = kCAFillRuleEvenOdd;
+  CGPathRelease(flipped);
+  layer.mask = mask;
+}
+
 static void DumpView(NSView* v, int depth, NSMutableString* out) {
   if (!v || depth > 5) return;
   NSRect f = v.frame;
@@ -72,6 +148,7 @@ std::string DebugHitTest(double x, double y) {
     NSRect wf = w.frame;
     NSPoint p = NSMakePoint(x, wf.size.height - y);
     NSView* hit = [cv hitTest:p];
+    [out appendFormat:@"forcedKey=%d\n", g_forced_key];
     [out appendFormat:@"WINDOW %@ frame(%.0f,%.0f %.0fx%.0f) key=%d main=%d level=%ld parent=%@ children=%lu hit=%@ hitFrame=%@\n",
                       NSStringFromClass([w class]), wf.origin.x, wf.origin.y, wf.size.width, wf.size.height,
                       (int)w.isKeyWindow, (int)w.isMainWindow, (long)w.level, w.parentWindow ? @"yes" : @"no",
