@@ -196,7 +196,7 @@ try:
     log("--- find in page ---")
     c.eval("window.openFind()")
     time.sleep(0.6)
-    c.eval("(function(){var i=document.getElementById('findInput');i.value='Google';i.dispatchEvent(new Event('input',{bubbles:true}));})()")
+    c.eval("(function(){var i=document.getElementById('findInput');i.value='Creative';i.dispatchEvent(new Event('input',{bubbles:true}));})()")
     time.sleep(2.5)
     log("find cnt:", c.eval("document.getElementById('findCnt').textContent"),
         "| snap:", c.eval("!!document.getElementById('shSnap')"))

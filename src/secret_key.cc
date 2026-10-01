@@ -10,7 +10,7 @@
 
 #include "src/platform.h"
 
-#if defined(OS_WIN)
+#if defined(_WIN32)
 #include <windows.h>
 #include <wincrypt.h>
 #else
@@ -44,7 +44,7 @@ bool ReadAll(const std::filesystem::path& p, std::string* out) {
 }
 
 bool WriteAll(const std::filesystem::path& p, const std::string& data) {
-#if defined(OS_WIN)
+#if defined(_WIN32)
   std::ofstream f(p, std::ios::binary | std::ios::trunc);
   if (!f) return false;
   f.write(data.data(), (std::streamsize)data.size());
@@ -64,7 +64,7 @@ bool WriteAll(const std::filesystem::path& p, const std::string& data) {
 #endif
 }
 
-#if defined(OS_WIN)
+#if defined(_WIN32)
 bool Protect(const std::string& in, std::string* out) {
   DATA_BLOB i{(DWORD)in.size(), (BYTE*)in.data()}, o{};
   if (!CryptProtectData(&i, L"SHELTER", nullptr, nullptr, nullptr, 0, &o)) return false;
