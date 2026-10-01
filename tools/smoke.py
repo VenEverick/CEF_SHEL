@@ -120,6 +120,7 @@ try:
     log("title:", c.eval("document.title"))
     log("shelterNative:", c.eval("JSON.stringify({n: !!window.shelterNative, p: window.shelterNative && window.shelterNative.platform, open: typeof window.shelterOpen, tabHook: typeof window.__shelterTab, cq: typeof window.cefQuery})"))
     log("viewport:", c.eval("JSON.stringify(document.getElementById('viewport').getBoundingClientRect())"))
+    log("secret roundtrip:", c.eval("(function(){var n=window.shelterNative,e=n.secretEnc('Пароль-123');return [e.slice(0,4),n.secretDec(e)==='Пароль-123',n.secretDec(e.slice(0,-2)+'AA')===''].join('|')})()"))
     log("clip roundtrip:", c.eval("window.shelterNative.clipWrite('shelter-test').then(()=>window.shelterNative.clipRead())", True))
     c.shot(f"{out}/ui-start.png")
     os_shot(f"{out}/os-start.png")

@@ -98,6 +98,7 @@ class UiSchemeHandlerFactory : public CefSchemeHandlerFactory {
     } else if (rel == "host-bridge.js") {
       ReplaceAll(&data, "__PLATFORM__", kPlatform);
       ReplaceAll(&data, "__APP_VERSION__", kAppVersion);
+      ReplaceAll(&data, "__SECRET_KEY__", platform::SecretKeyHex());
     }
 
     std::string ext;

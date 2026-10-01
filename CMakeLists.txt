@@ -40,6 +40,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # ---- Исходники ---------------------------------------------------------------
 set(SHELTER_COMMON_SRCS
   src/common.cc src/common.h
+  src/secret_key.cc
   src/renderer_app.cc src/renderer_app.h
   src/ui_scheme.cc src/ui_scheme.h
   src/key_map.cc src/key_map.h
@@ -65,7 +66,7 @@ if(OS_WINDOWS)
   ADD_LOGICAL_TARGET("libcef_lib" "${CEF_LIB_DEBUG}" "${CEF_LIB_RELEASE}")
   add_dependencies(${CEF_TARGET} libcef_dll_wrapper)
   target_link_libraries(${CEF_TARGET} libcef_lib libcef_dll_wrapper ${CEF_STANDARD_LIBS}
-                        shell32 ole32 user32 uuid)
+                        shell32 ole32 user32 uuid crypt32)
 
   COPY_FILES("${CEF_TARGET}" "${CEF_BINARY_FILES}" "${CEF_BINARY_DIR}" "${CEF_TARGET_OUT_DIR}")
   COPY_FILES("${CEF_TARGET}" "${CEF_RESOURCE_FILES}" "${CEF_RESOURCE_DIR}" "${CEF_TARGET_OUT_DIR}")

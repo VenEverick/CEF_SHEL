@@ -26,12 +26,6 @@ class UiClient : public CefClient,
   CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override { return this; }
   CefRefPtr<CefLoadHandler> GetLoadHandler() override { return this; }
   CefRefPtr<CefRequestHandler> GetRequestHandler() override { return this; }
-  CefRefPtr<CefFindHandler> GetFindHandler() override { return this; }
-
-  // CefFindHandler
-  void OnFindResult(CefRefPtr<CefBrowser> browser, int identifier, int count,
-                    const CefRect& selectionRect, int activeMatchOrdinal,
-                    bool finalUpdate) override;
   CefRefPtr<CefDragHandler> GetDragHandler() override { return this; }
   CefRefPtr<CefContextMenuHandler> GetContextMenuHandler() override {
     return this;
@@ -120,6 +114,12 @@ class TabClient : public CefClient,
   CefRefPtr<CefDownloadHandler> GetDownloadHandler() override { return this; }
   CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() override { return this; }
   CefRefPtr<CefRequestHandler> GetRequestHandler() override { return this; }
+  CefRefPtr<CefFindHandler> GetFindHandler() override { return this; }
+
+  // CefFindHandler
+  void OnFindResult(CefRefPtr<CefBrowser> browser, int identifier, int count,
+                    const CefRect& selectionRect, int activeMatchOrdinal,
+                    bool finalUpdate) override;
 
   // CefLifeSpanHandler
   bool OnBeforePopup(CefRefPtr<CefBrowser> browser,

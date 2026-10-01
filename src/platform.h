@@ -29,6 +29,9 @@ bool ClipboardWrite(const std::string& text);
 // Светлая/тёмная схема нативных элементов (macOS: NSAppearance).
 void SetColorScheme(bool dark);
 
+// Мастер-ключ секретов UI: 32 байта в hex (создаётся при первом запуске).
+std::string SecretKeyHex();
+
 // Диагностика (macOS): результат hitTest окон приложения в точке (x, y) окна, DIP от верхнего левого угла.
 std::string DebugHitTest(double x, double y);
 
