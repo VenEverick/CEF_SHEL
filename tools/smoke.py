@@ -226,11 +226,12 @@ try:
             import Quartz
             wl = Quartz.CGWindowListCopyWindowInfo(Quartz.kCGWindowListOptionAll, Quartz.kCGNullWindowID)
             for w in wl:
-                if "helter" in str(w.get("kCGWindowOwnerName", "")):
+                if w.get("kCGWindowOwnerPID") == proc.pid:
                     b = w.get("kCGWindowBounds", {})
                     log("window:", w.get("kCGWindowNumber"), "layer", w.get("kCGWindowLayer"), "alpha", w.get("kCGWindowAlpha"),
                         "onscreen", w.get("kCGWindowIsOnscreen"), "name", repr(w.get("kCGWindowName")),
                         "bounds", int(b.get("X", 0)), int(b.get("Y", 0)), int(b.get("Width", 0)), int(b.get("Height", 0)))
+            log("window list total:", len(wl), "pid:", proc.pid)
         except Exception as e:
             log("window list unavailable:", e)
     log("click sidebar history:", c.eval("(function(){var b=document.querySelector('.ni[data-page=history]'); if(!b) return 'none'; b.click(); return 'clicked';})()"))
