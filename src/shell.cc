@@ -10,6 +10,7 @@
 #include "include/cef_app.h"
 #include "include/cef_command_line.h"
 #include "include/cef_parser.h"
+#include "include/views/cef_box_layout.h"
 #include "include/views/cef_display.h"
 #include "include/wrapper/cef_closure_task.h"
 #include "include/wrapper/cef_helpers.h"
@@ -164,7 +165,21 @@ void Shell::OnWindowCreated(CefRefPtr<CefWindow> window) {
     window_->SetWindowIcon(icon);
     window_->SetWindowAppIcon(icon);
   }
+  // AddOverlayView() добавляет в корень окна пустой views::View («z-order reference»).
+  // При дефолтном FillLayout он растягивается на всё окно и перехватывает hit-test Views,
+  // из‑за чего NSView интерфейса на macOS перестаёт получать мышь. BoxLayout с flex только
+  // у UI-вида оставляет таким служебным видам нулевую ширину.
+  CefBoxLayoutSettings bl;
+  bl.horizontal = true;
+  bl.inside_border_insets = CefInsets(0, 0, 0, 0);
+  bl.between_child_spacing = 0;
+  bl.main_axis_alignment = CEF_AXIS_ALIGNMENT_START;
+  bl.cross_axis_alignment = CEF_AXIS_ALIGNMENT_STRETCH;
+  bl.minimum_cross_axis_size = 0;
+  bl.default_flex = 0;
+  CefRefPtr<CefBoxLayout> layout = window_->SetToBoxLayout(bl);
   window_->AddChildView(ui_view_);
+  if (layout) layout->SetFlexForView(ui_view_, 1);
   window_->Show();
   ui_view_->RequestFocus();
 }
