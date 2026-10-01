@@ -1,0 +1,42 @@
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- *** CEF CONFIGURATION SETTINGS ***
+-- Generator:                    Ninja
+-- Platform:                     Windows
+-- Project architecture:         x86_64
+-- Build type:                   Release
+-- Binary distribution root:     D:/a/CEF_SHEL/CEF_SHEL/third_party/cef/cef_binary_154.0.32+g682c378+chromium-154.0.8037.58_windows64_minimal
+-- Visual Studio ATL support:    OFF
+-- CEF sandbox:                  OFF
+-- CEF installer mode:           OFF
+-- Standard libraries:           comctl32.lib;crypt32.lib;delayimp.lib;gdi32.lib;rpcrt4.lib;shlwapi.lib;wintrust.lib;ws2_32.lib
+-- Compile defines:              __STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;WIN32;_WIN32;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0A00;_WIN32_WINNT=0x0A00;NTDDI_VERSION=NTDDI_WIN10_FE;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0
+-- Compile defines (Debug):      
+-- Compile defines (Release):    NDEBUG;_NDEBUG
+-- C compile flags:              /MP;/Gy;/GF;/GR-;/utf-8;/W4;/wd4100;/wd4127;/wd4244;/wd4324;/wd4481;/wd4512;/wd4701;/wd4702;/wd4996;/Zi 
+-- C compile flags (Debug):      /MTd;/RTC1;/Od 
+-- C compile flags (Release):    /MT;/O2;/Ob2 
+-- C++ compile flags:            /MP;/Gy;/GF;/GR-;/utf-8;/W4;/wd4100;/wd4127;/wd4244;/wd4324;/wd4481;/wd4512;/wd4701;/wd4702;/wd4996;/Zi /std:c++20
+-- C++ compile flags (Debug):    /MTd;/RTC1;/Od 
+-- C++ compile flags (Release):  /MT;/O2;/Ob2 
+-- Exe link flags:                /MANIFEST:NO;/LARGEADDRESSAWARE;/DELAYLOAD:libcef.dll;/DELAYLOAD:api-ms-win-core-synch-l1-2-0.dll;/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll;/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll;/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll;/DELAYLOAD:advapi32.dll;/DELAYLOAD:bcryptprimitives.dll;/DELAYLOAD:comctl32.dll;/DELAYLOAD:comdlg32.dll;/DELAYLOAD:credui.dll;/DELAYLOAD:cryptui.dll;/DELAYLOAD:d3d11.dll;/DELAYLOAD:d3d12.dll;/DELAYLOAD:d3d9.dll;/DELAYLOAD:dbghelp.dll;/DELAYLOAD:dcomp.dll;/DELAYLOAD:dwmapi.dll;/DELAYLOAD:dxgi.dll;/DELAYLOAD:dxva2.dll;/DELAYLOAD:esent.dll;/DELAYLOAD:fontsub.dll;/DELAYLOAD:gdi32.dll;/DELAYLOAD:hid.dll;/DELAYLOAD:imagehlp.dll;/DELAYLOAD:imm32.dll;/DELAYLOAD:mmdevapi.dll;/DELAYLOAD:msi.dll;/DELAYLOAD:netapi32.dll;/DELAYLOAD:ncrypt.dll;/DELAYLOAD:ole32.dll;/DELAYLOAD:oleacc.dll;/DELAYLOAD:oleaut32.dll;/DELAYLOAD:pdh.dll;/DELAYLOAD:propsys.dll;/DELAYLOAD:psapi.dll;/DELAYLOAD:rpcrt4.dll;/DELAYLOAD:rstrtmgr.dll;/DELAYLOAD:setupapi.dll;/DELAYLOAD:shell32.dll;/DELAYLOAD:shlwapi.dll;/DELAYLOAD:uiautomationcore.dll;/DELAYLOAD:urlmon.dll;/DELAYLOAD:user32.dll;/DELAYLOAD:usp10.dll;/DELAYLOAD:uxtheme.dll;/DELAYLOAD:wer.dll;/DELAYLOAD:wevtapi.dll;/DELAYLOAD:wininet.dll;/DELAYLOAD:winusb.dll;/DELAYLOAD:wsock32.dll;/DELAYLOAD:wtsapi32.dll;/DELAYLOAD:crypt32.dll;/DELAYLOAD:dhcpcsvc.dll;/DELAYLOAD:dwrite.dll;/DELAYLOAD:iphlpapi.dll;/DELAYLOAD:secur32.dll;/DELAYLOAD:userenv.dll;/DELAYLOAD:winhttp.dll;/DELAYLOAD:winmm.dll;/DELAYLOAD:winspool.drv;/DELAYLOAD:wintrust.dll;/DELAYLOAD:ws2_32.dll;/STACK:0x800000
+-- Exe link flags (Debug):       /DEBUG 
+-- Exe link flags (Release):      
+-- Shared link flags:             /DELAYLOAD:libcef.dll;/DELAYLOAD:api-ms-win-core-synch-l1-2-0.dll;/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll;/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll;/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll;/DELAYLOAD:advapi32.dll;/DELAYLOAD:bcryptprimitives.dll;/DELAYLOAD:comctl32.dll;/DELAYLOAD:comdlg32.dll;/DELAYLOAD:credui.dll;/DELAYLOAD:cryptui.dll;/DELAYLOAD:d3d11.dll;/DELAYLOAD:d3d12.dll;/DELAYLOAD:d3d9.dll;/DELAYLOAD:dbghelp.dll;/DELAYLOAD:dcomp.dll;/DELAYLOAD:dwmapi.dll;/DELAYLOAD:dxgi.dll;/DELAYLOAD:dxva2.dll;/DELAYLOAD:esent.dll;/DELAYLOAD:fontsub.dll;/DELAYLOAD:gdi32.dll;/DELAYLOAD:hid.dll;/DELAYLOAD:imagehlp.dll;/DELAYLOAD:imm32.dll;/DELAYLOAD:mmdevapi.dll;/DELAYLOAD:msi.dll;/DELAYLOAD:netapi32.dll;/DELAYLOAD:ncrypt.dll;/DELAYLOAD:ole32.dll;/DELAYLOAD:oleacc.dll;/DELAYLOAD:oleaut32.dll;/DELAYLOAD:pdh.dll;/DELAYLOAD:propsys.dll;/DELAYLOAD:psapi.dll;/DELAYLOAD:rpcrt4.dll;/DELAYLOAD:rstrtmgr.dll;/DELAYLOAD:setupapi.dll;/DELAYLOAD:shell32.dll;/DELAYLOAD:shlwapi.dll;/DELAYLOAD:uiautomationcore.dll;/DELAYLOAD:urlmon.dll;/DELAYLOAD:user32.dll;/DELAYLOAD:usp10.dll;/DELAYLOAD:uxtheme.dll;/DELAYLOAD:wer.dll;/DELAYLOAD:wevtapi.dll;/DELAYLOAD:wininet.dll;/DELAYLOAD:winusb.dll;/DELAYLOAD:wsock32.dll;/DELAYLOAD:wtsapi32.dll;/DELAYLOAD:crypt32.dll;/DELAYLOAD:dhcpcsvc.dll;/DELAYLOAD:dwrite.dll;/DELAYLOAD:iphlpapi.dll;/DELAYLOAD:secur32.dll;/DELAYLOAD:userenv.dll;/DELAYLOAD:winhttp.dll;/DELAYLOAD:winmm.dll;/DELAYLOAD:winspool.drv;/DELAYLOAD:wintrust.dll;/DELAYLOAD:ws2_32.dll
+-- Shared link flags (Debug):    /DEBUG 
+-- Shared link flags (Release):   
+-- CEF Binary files:             chrome_elf.dll;d3dcompiler_47.dll;libcef.dll;v8_context_snapshot.bin;vk_swiftshader.dll;vk_swiftshader_icd.json;vulkan-1.dll;dxil.dll;dxcompiler.dll
+-- CEF Resource files:           chrome_100_percent.pak;chrome_200_percent.pak;resources.pak;icudtl.dat;locales
+-- Configuring done (32.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/a/CEF_SHEL/CEF_SHEL/build

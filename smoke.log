@@ -1,0 +1,94 @@
+launch: ['C:\\Users\\runneradmin\\AppData\\Local\\Programs\\SHELTER\\Shelter.exe', '--remote-debugging-port=9222', '--remote-allow-origins=*']
+targets: [["page", "shelter://app/index.html", "SHELTER — Приватный браузер"]]
+title: SHELTER — Приватный браузер
+shelterNative: {"n":true,"p":"win32","open":"function","tabHook":"function","cq":"function"}
+viewport: {"x":76,"y":55,"width":873,"height":574,"top":55,"right":949,"bottom":629,"left":76}
+secret roundtrip: ss1:|true|true
+clip roundtrip: shelter-test
+newTab: t_muplcunxpsrlm
+targets after newTab: [["page", "https://example.org/", "Example Domain"], ["page", "shelter://app/index.html", "SHELTER — Приватный браузер"]]
+active tab url in UI: shelter.dev/start | Экспресс-панель ;; https://example.org/ | Example Domain
+tab title: Example Domain | shelterNative in tab: undefined | cefQuery in tab: undefined
+open menu: clicked
+snap img present: True | menu: True
+after close: snap img = False
+navigate CC: None
+[search+4s] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4","snap":false,"vp":[76,55,873,574]}
+[search+8s] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4","snap":false,"vp":[76,55,873,574]}
+[search+12s] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4","snap":false,"vp":[76,55,873,574]}
+[search+16s] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4","snap":false,"vp":[76,55,873,574]}
+targets after search: [["page", "https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4", "CC - Поиск в Google"], ["iframe", "https://www.youtube.com/embed/?enablejsapi=1&rel=0&autoplay=0&playsinline=1&fs=1&hl=ru-US&authuser=0&embed_con", "https://www.youtube.com/embed/?enablejsapi=1&amp;rel=0&amp;autoplay=0&amp;playsinline=1&amp;fs=1&amp;hl=ru-US&amp;authuser=0&amp;embed_config=%7B%22enc%22%3A%22AXH1ezn4WJOvsTMyiZsBZuAS5v56nu1HDcfc6idxTncM5KihdBIktO9pnf4oQoWv1xpaoc8bQZhE1RZYGPbeuMsGO0ubr1Lf2bJ2e96j-3D_4F4eO6aGMQQYfbRVqnNRMTVk7kZ1QJKzv-L-gK4bHlAe9hmcr5BT1GB0wl-OScHvMn0Ka-YsX4K-ey_fa05MvMOezt7rUyBWc-kcsta3uCLNH2ueR3XdaxHfbX9P46Hw40crmugKiAalpPtvI0_2tq-UPPN3ee60sHyhUB8N4BrNtFNoMkvFlLHuujytkbg5nPVCRGmCysTE7SedzKU1TggGJfBFk2He%22%7D"], ["page", "shelter://app/index.html", "SHELTER — Приватный браузер"]]
+--- find in page ---
+find cnt: 1 / 20 | snap: False
+find cnt after next: 2 / 20
+find closed, hidden: True
+cliclick not available, real mouse test skipped
+click sidebar history: clicked
+[after history click] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История","ref":"reload","back":"tb-btn off","omni":"shelter://history","snap":false,"vp":[76,55,873,574]}
+click back: clicked
+[after back] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История","ref":"reload","back":"tb-btn off","omni":"shelter://history","snap":false,"vp":[76,55,873,574]}
+--- functional scenario (local server) ---
+newTab p1: t_mupldr8ghaurv
+after p1: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p1 | Page /p1
+navigate p2: None
+after p2: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+after back: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p1 | Page /p1
+after forward: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+local find cnt (expect 1 / 3): 1 / 3
+zoom: set
+page devicePixel/zoom check, innerWidth: 582
+navigate download: None
+download prompt shown: True
+download file exists: True 200000 dir: C:\Users\runneradmin\Downloads
+tabs after download: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+--- zoom across origins ---
+zoom: base innerWidth p2: 873
+zoom 1.5 same host p2: 582
+zoom 1.5 other host p3 (expect ~base/1.5): 582
+zoom 1.5 back to first host p4 (expect ~base/1.5): 582
+zoom reset p4: 873
+--- overlays over live page (holes) ---
+perf before: {"freezes":2,"thaws":1,"snapMs":[105,62],"snapKB":[15,8],"freezeMs":[142,105],"thawMs":[69],"holes":0,"clips":0,"longTasks":5,"longMax":1961}
+toast: snap = True | clip = 
+after toast: clip = 
+tip shown: True | snap = True | clip = 
+suggest shown: True | snap = True | clip = 
+perf after: {"freezes":2,"thaws":1,"snapMs":[105,62],"snapKB":[15,8],"freezeMs":[142,105],"thawMs":[69],"holes":0,"clips":0,"longTasks":5,"longMax":1961}
+hwnd chain:
+  hwnd=0000000000050028 cls=Chrome_WidgetWin_1 rect=0,0,960,640 style=16c70000 ex=00200100 rgn=0
+ root children:
+  child hwnd=0000000000080018 cls=Chrome_RenderWidgetHostHWND rect=76,55,873,574 vis=0
+  child hwnd=000000000007005C cls=Chrome_RenderWidgetHostHWND rect=76,55,873,574 vis=0
+  child hwnd=00000000000401E6 cls=Chrome_RenderWidgetHostHWND rect=0,0,960,640 vis=1
+  child hwnd=000000000002020C cls=Intermediate D3D Window rect=0,0,960,640 vis=1
+
+--- download via page link click ---
+file link: prompt = False
+file link: prompt still open = False | file.bin exists = False | tabs: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/dl | DL
+blob link: prompt = False
+blob link: prompt still open = False | file.bin exists = False | tabs: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/dl | DL
+--- shelter.log ---
+download before id=dl1 name=shelter-test.bin url=http://127.0.0.1:8765/file.bin size=200000
+download decision id=dl1 action=save path=C:\Users\runneradmin\Downloads\shelter-test.bin
+download update id=dl1 state=completed bytes=200000 reason=0 path=C:\Users\runneradmin\Downloads\shelter-test.bin
+
+tabs before/after close: 4 3 | active: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; *shelter.dev/history | История
+--- ghost: disk leak check ---
+ghost on: 1
+ghost tab: shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=HGW-av2AB6LFkPIPnfHB2Q4 | CC - Поиск в Google ;; shelter.dev/history | История ;; http://127.0.0.1:8765/mark?m=PERSISTMARK32842989f301 | Mark ;; *http://127.0.0.1:8765/mark?m=GHOSTMARK77f1f1c1d00e | Mark
+page marker (ghost tab): GHOSTMARK77f1f1c1d00e
+ghost page cookies (must NOT contain PERSISTMARK): c_GHOSTMARK77f1f1c1d00e=1
+ghost page localStorage keys: k_GHOSTMARK77f1f1c1d00e
+persist page cookies: c_PERSISTMARK32842989f301=1
+files scanned: 190 in C:\Users\runneradmin\AppData\Local\SHELTER
+  dir Profiles\space-main []
+  dir Default ['Account Web Data', 'Account Web Data-journal', 'Affiliation Database', 'Affiliation Database-journal', 'AutofillAiModelCache', 'AutofillStrikeDatabase', 'BookmarkMergedSurfaceOrdering', 'BudgetDatabase', 'Cache', 'ClientCertificates', 'Code Cache', 'DIPS', 'DIPS-wal', 'DawnGraphiteCache', 'DawnWebGPUCache', 'Extension Rules', 'Extension Scripts', 'Extension State', 'Favicons', 'Favicons-journal', 'Feature Engagement Tracker', 'GPUCache', 'History', 'History-journal', 'LOCK', 'LOG', 'Local Storage', 'Login Data', 'Login Data For Account', 'Login Data For Account-journal']
+  dir Profiles ['space-main']
+CONTROL (persistent space) marker found in: NOT FOUND
+GHOST marker found on disk in: nothing (OK)
+ui console problems: 2
+   Failed to load resource: the server responded with a status of 404 (Not Found) shelter://app/native.js
+   Failed to load resource: the server responded with a status of 404 (Not Found) shelter://app/cdn-cgi/challenge-platform/scripts/jsd/main.js
+--- layout.log ---
+layout.log unavailable: [Errno 2] No such file or directory: 'C:\\Users\\runneradmin\\AppData\\Local\\SHELTER\\layout.log'
+SMOKE DONE

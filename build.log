@@ -1,0 +1,451 @@
+[1/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\shutdown_checker.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[2/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\transfer_util.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[3/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_atomic_flag.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[4/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_callback_internal.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[5/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_callback_helpers.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[6/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_dump_without_crashing.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[7/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_lock_impl.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[8/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_lock.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[9/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_ref_counted.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[10/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_logging.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[11/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_thread_checker_impl.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[12/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\base\cef_weak_ptr.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[13/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\app_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[14/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\accessibility_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[15/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\audio_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[16/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\base_ref_counted_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[17/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\base_scoped_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[18/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\browser_process_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[19/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[20/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\command_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[21/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\completion_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[22/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\component_update_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[23/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\context_menu_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[24/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\cookie_access_filter_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[25/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\cookie_visitor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[26/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\delete_cookies_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[27/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\dev_tools_message_observer_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[28/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\dialog_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[29/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\display_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[30/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\domvisitor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[31/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\download_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[32/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\download_image_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[33/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\drag_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[34/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\find_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[35/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\end_tracing_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[36/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\focus_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[37/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\jsdialog_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[38/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\frame_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[39/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\keyboard_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[40/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\load_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[41/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\life_span_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[42/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\media_observer_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[43/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\media_route_create_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[44/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\media_sink_device_info_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[45/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\menu_model_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[46/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\pdf_print_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[47/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\navigation_entry_visitor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[48/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\permission_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[49/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\preference_observer_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[50/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\print_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[51/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\read_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[52/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\render_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[53/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\render_process_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[54/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\request_context_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[55/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\resolve_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[56/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\resource_bundle_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[57/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\request_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[58/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\resource_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[59/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\response_filter_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[60/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\resource_request_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[61/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\run_file_dialog_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[62/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\server_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[63/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\scheme_handler_factory_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[64/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\set_cookie_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[65/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\string_visitor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[66/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\setting_observer_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[67/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\urlrequest_client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[68/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\task_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[69/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\v8_accessor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[70/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\v8_array_buffer_release_callback_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[71/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\v8_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[72/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\v8_interceptor_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[73/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_ref_ptr_client_child_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[74/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\write_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[75/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_ref_ptr_client_child_v2_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[76/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_scoped_client_child_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[77/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_ref_ptr_client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[78/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_scoped_client_child_v2_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[79/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\api_version_test_scoped_client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[80/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\test_server_handler_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[81/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\translator_test_ref_ptr_client_child_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[82/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\translator_test_ref_ptr_client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[83/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\translator_test_scoped_client_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[84/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\test\translator_test_scoped_client_child_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[85/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\browser_view_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[86/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\button_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[87/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\menu_button_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[88/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\panel_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[89/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\textfield_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[90/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\view_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[91/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\cpptoc\views\window_delegate_cpptoc.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[92/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\auth_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[93/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\before_download_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[94/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\binary_value_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[95/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\browser_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[96/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\browser_host_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[97/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[98/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\command_line_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[99/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\component_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[100/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\component_updater_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[101/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\context_menu_params_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[102/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\dictionary_value_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[103/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\cookie_manager_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[104/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\domdocument_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[105/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\domnode_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[106/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\download_item_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[107/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\download_item_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[108/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\file_dialog_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[109/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\drag_data_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[110/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\image_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[111/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\jsdialog_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[112/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\frame_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[113/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\media_access_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[114/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\list_value_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[115/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\media_route_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[116/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\media_router_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[117/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\media_sink_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[118/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\media_source_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[119/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\menu_model_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[120/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\navigation_entry_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[121/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\permission_prompt_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[122/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\post_data_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[123/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\preference_manager_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[124/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\post_data_element_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[125/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\print_job_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[126/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\print_dialog_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[127/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\preference_registrar_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[128/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\print_settings_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[129/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\process_message_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[130/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\registration_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[131/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\resource_bundle_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[132/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\request_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[133/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\request_context_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[134/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\resource_skip_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[135/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\resource_read_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[136/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\response_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[137/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\run_context_menu_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[138/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\scheme_registrar_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[139/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\run_quick_menu_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[140/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\server_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[141/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\select_client_certificate_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[142/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\shared_memory_region_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[143/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\shared_process_message_builder_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[144/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\sslinfo_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[145/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\sslstatus_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[146/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\stream_reader_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[147/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\stream_writer_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[148/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\task_manager_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[149/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\thread_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[150/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\unresponsive_process_callback_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[151/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\task_runner_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[152/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_backing_store_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[153/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\urlrequest_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[154/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_context_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[155/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_exception_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[156/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_stack_frame_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[157/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_stack_trace_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[158/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\value_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[159/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\waitable_event_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[160/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\v8_value_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[161/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\x509_cert_principal_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[162/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\x509_certificate_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[163/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\xml_reader_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[164/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ref_ptr_library_child_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[165/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\zip_reader_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[166/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[167/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ref_ptr_library_child_child_v1_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[168/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ref_ptr_library_child_child_v2_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[169/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ref_ptr_library_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[170/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_ref_ptr_library_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[171/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_scoped_library_child_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[172/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_scoped_library_child_child_v1_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[173/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_scoped_library_child_child_v2_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[174/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_scoped_library_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[175/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\api_version_test_scoped_library_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[176/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\test_server_connection_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[177/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\test_server_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[178/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[179/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_ref_ptr_library_child_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[180/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_ref_ptr_library_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[181/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_ref_ptr_library_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[182/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_scoped_library_child_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[183/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_scoped_library_child_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[184/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\test\translator_test_scoped_library_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[185/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\box_layout_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[186/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\browser_view_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[187/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\button_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[188/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\display_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[189/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\fill_layout_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[190/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\layout_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[191/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\label_button_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[192/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\menu_button_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[193/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\menu_button_pressed_lock_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[194/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\overlay_controller_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[195/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\panel_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[196/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\scroll_view_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[197/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\textfield_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[198/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\view_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[199/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\ctocpp\views\window_ctocpp.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[200/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_byte_read_handler.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[201/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_closure_task.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[202/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_message_router_utils.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[203/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_resource_manager.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[204/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_scoped_temp_dir.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[205/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_message_router.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[206/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_stream_resource_handler.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[207/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_zip_archive.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[208/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_xml_object.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[209/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\libcef_dll_wrapper2.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[210/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\libcef_dll_wrapper.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[211/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_certificate_util_win.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[212/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_scoped_library_loader_win.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[213/227] Building CXX object libcef_dll_wrapper\CMakeFiles\libcef_dll_wrapper.dir\wrapper\cef_util_win.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[214/227] Building CXX object CMakeFiles\Shelter.dir\src\common.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[215/227] Building CXX object CMakeFiles\Shelter.dir\src\renderer_app.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[216/227] Building CXX object CMakeFiles\Shelter.dir\src\secret_key.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[217/227] Building CXX object CMakeFiles\Shelter.dir\src\key_map.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[218/227] Building CXX object CMakeFiles\Shelter.dir\src\ui_scheme.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[219/227] Building CXX object CMakeFiles\Shelter.dir\src\clients.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[220/227] Building CXX object CMakeFiles\Shelter.dir\src\shell_bridge.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[221/227] Building CXX object CMakeFiles\Shelter.dir\src\browser_app.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[222/227] Building CXX object CMakeFiles\Shelter.dir\src\shell.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[223/227] Building RC object CMakeFiles\Shelter.dir\win\shelter.rc.res
+[224/227] Building CXX object CMakeFiles\Shelter.dir\src\main_win.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[225/227] Linking CXX static library libcef_dll_wrapper\libcef_dll_wrapper.lib
+[226/227] Building CXX object CMakeFiles\Shelter.dir\src\platform_win.cc.obj
+cl : Command line warning D9025 : overriding '/MD' with '/MT'
+[227/227] Linking CXX executable Release\Shelter.exe; Adding manifest...

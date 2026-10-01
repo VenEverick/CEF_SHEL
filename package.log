@@ -1,0 +1,314 @@
+Inno Setup 6 Command-Line Compiler
+Copyright (C) 1997-2026 Jordan Russell. All rights reserved.
+Portions Copyright (C) 2000-2026 Martijn Laan. All rights reserved.
+Portions Copyright (C) 2001-2004 Alex Yackimoff. All rights reserved.
+https://www.innosetup.com
+
+Compiler engine version: Inno Setup 6.7.1
+Non-commercial use only
+
+Preprocessing
+   Reading file: C:\Program Files (x86)\Inno Setup 6\ISPPBuiltins.iss
+Parsing [Setup] section, line 14
+Parsing [Setup] section, line 15
+Parsing [Setup] section, line 16
+Parsing [Setup] section, line 17
+Parsing [Setup] section, line 18
+Parsing [Setup] section, line 19
+Parsing [Setup] section, line 20
+Parsing [Setup] section, line 21
+Parsing [Setup] section, line 22
+Parsing [Setup] section, line 23
+Parsing [Setup] section, line 24
+Parsing [Setup] section, line 25
+Parsing [Setup] section, line 26
+Parsing [Setup] section, line 27
+Parsing [Setup] section, line 28
+Parsing [Setup] section, line 29
+Parsing [Setup] section, line 30
+Parsing [Setup] section, line 31
+Parsing [Setup] section, line 32
+Parsing [Setup] section, line 33
+Parsing [Setup] section, line 34
+Parsing [Setup] section, line 35
+Parsing [Setup] section, line 36
+Reading file (WizardImageFile)
+Reading file (WizardSmallImageFile)
+Preparing Setup program executable
+   Verification successful
+   Updating icons (Setup.e32)
+   Updating version info (Setup.e32)
+Determining language code pages
+Parsing [Languages] section, line 39
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Languages\Russian.isl
+Parsing [Languages] section, line 40
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Default.isl
+   Messages in script file
+Reading default messages from Default.isl
+Parsing [Languages] section, line 39
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Languages\Russian.isl
+Parsing [Languages] section, line 40
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Default.isl
+Parsing [LangOptions], [Messages], and [CustomMessages] sections
+   Messages in script file
+Reading [Code] section
+Parsing [Tasks] section, line 43
+Parsing [Icons] section, line 49
+Parsing [Icons] section, line 50
+Parsing [Run] section, line 53
+Parsing [Files] section, line 46
+Creating setup files
+   Verification successful
+   Updating icons (Setup.exe)
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\chrome_100_percent.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\chrome_200_percent.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\chrome_elf.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\d3dcompiler_47.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\dxcompiler.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\dxil.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\icudtl.dat
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\libcef.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\resources.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\Shelter.exe
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\v8_context_snapshot.bin
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\vk_swiftshader.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\vk_swiftshader_icd.json
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\vulkan-1.dll
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\af.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\af_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\af_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\af_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\am.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\am_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\am_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\am_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ar.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ar_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ar_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ar_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bg.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bg_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bg_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bg_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bn.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bn_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bn_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\bn_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ca.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ca_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ca_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ca_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\cs.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\cs_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\cs_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\cs_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\da.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\da_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\da_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\da_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\de.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\de_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\de_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\de_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\el.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\el_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\el_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\el_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-GB.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-GB_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-GB_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-GB_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-US.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-US_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-US_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\en-US_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es-419.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es-419_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es-419_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es-419_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\es_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\et.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\et_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\et_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\et_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fa.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fa_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fa_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fa_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fi.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fil.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fil_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fil_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fil_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fi_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fi_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fi_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fr.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fr_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fr_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\fr_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\gu.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\gu_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\gu_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\gu_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\he.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\he_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\he_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\he_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hi.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hi_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hi_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hi_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hr.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hr_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hr_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hr_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hu.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hu_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hu_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\hu_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\id.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\id_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\id_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\id_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\it.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\it_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\it_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\it_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ja.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ja_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ja_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ja_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\kn.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\kn_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\kn_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\kn_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ko.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ko_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ko_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ko_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lt.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lt_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lt_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lt_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lv.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lv_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lv_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\lv_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ml.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ml_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ml_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ml_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\mr.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\mr_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\mr_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\mr_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ms.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ms_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ms_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ms_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nb.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nb_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nb_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nb_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nl.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nl_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nl_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\nl_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pl.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pl_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pl_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pl_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-BR.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-BR_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-BR_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-BR_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-PT.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-PT_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-PT_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\pt-PT_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ro.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ro_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ro_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ro_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ru.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ru_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ru_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ru_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sk.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sk_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sk_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sk_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sl.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sl_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sl_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sl_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sr.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sr_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sr_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sr_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sv.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sv_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sv_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sv_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sw.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sw_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sw_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\sw_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ta.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ta_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ta_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ta_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\te.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\te_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\te_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\te_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\th.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\th_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\th_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\th_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\tr.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\tr_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\tr_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\tr_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\uk.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\uk_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\uk_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\uk_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ur.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ur_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ur_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\ur_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\vi.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\vi_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\vi_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\vi_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-CN.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-CN_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-CN_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-CN_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-TW.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-TW_FEMININE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-TW_MASCULINE.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\locales\zh-TW_NEUTER.pak
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\ui\host-bridge.js
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\ui\icon-256.png
+   Compressing: D:\a\CEF_SHEL\CEF_SHEL\build\Release\ui\index.html
+   Compressing Setup program executable
+   Updating version info (Setup.exe)
+   Updating manifest (Setup.exe)
+
+
+Successful compile (133.890 sec). Resulting Setup program filename is:
+D:\a\CEF_SHEL\CEF_SHEL\dist\SHELTER-Setup-x64.exe
+
+    Directory: D:\a\CEF_SHEL\CEF_SHEL\dist
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           10/1/2026  1:49 PM      140819840 SHELTER-Setup-x64.exe
+
+
