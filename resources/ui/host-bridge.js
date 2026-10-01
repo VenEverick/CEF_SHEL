@@ -422,6 +422,7 @@
       id: id, url: url, partition: partition, rect: rect,
       visible: !st.frozen, focus: focus && !st.frozen, zoom: st.zoom
     });
+    st.clipKey = '';
     scheduleEval();
     return true;
   };

@@ -5,6 +5,7 @@
 #include <shlobj.h>
 
 #include <cstring>
+#include <cwchar>
 #include <string>
 
 namespace shelter {
@@ -164,13 +165,29 @@ void ApplyViewClip(void* handle, const double radii[4],
                    int view_h) {
   HWND h = static_cast<HWND>(handle);
   if (!h || !IsWindow(h) || view_w <= 0 || view_h <= 0) return;
-  // Область нужно задать окну — прямому потомку главного окна (виджет overlay).
+  // В режиме Views вид вкладки — это HWND «Chrome_RenderWidgetHostHWND», прямой потомок
+  // главного окна (GetWindowHandle() возвращает само главное окно). Находим видимый потомок
+  // меньше окна (полноразмерные — это интерфейс и D3D-окно) и задаём область ему;
+  // остальным вкладкам область снимаем.
   HWND root = GetAncestor(h, GA_ROOT);
-  HWND cur = h;
-  if (g_clip_level < 0) {
-    while (cur && GetParent(cur) && GetParent(cur) != root) cur = GetParent(cur);
-  } else {
-    for (int i = 0; i < g_clip_level && cur && GetParent(cur) && GetParent(cur) != root; ++i) cur = GetParent(cur);
+  if (!root) root = h;
+  RECT rr{};
+  GetWindowRect(root, &rr);
+  const int rootW = rr.right - rr.left, rootH = rr.bottom - rr.top;
+  HWND cur = nullptr;
+  for (HWND c = GetWindow(root, GW_CHILD); c; c = GetWindow(c, GW_HWNDNEXT)) {
+    wchar_t cls[64] = {0};
+    GetClassNameW(c, cls, 63);
+    if (wcscmp(cls, L"Chrome_RenderWidgetHostHWND") != 0) continue;
+    RECT r{};
+    GetWindowRect(c, &r);
+    const bool full = (r.right - r.left) >= rootW - 2 && (r.bottom - r.top) >= rootH - 2;
+    if (full) continue;
+    if (!cur && IsWindowVisible(c)) {
+      cur = c;
+    } else {
+      SetWindowRgn(c, nullptr, TRUE);
+    }
   }
   if (!cur) return;
 

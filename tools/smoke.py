@@ -399,15 +399,8 @@ try:
     log("perf after:", c.eval("JSON.stringify(window.__shPerf)"))
 
     if platform.system() == "Windows":
-        log("--- clip experiments (which HWND gets the region) ---")
-        for lvl in (-1, 0, 1, 2, 3):
-            r_ = c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.clip',a:{level:%d}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})" % lvl, True)
-            if lvl == -1: log("hwnd chain:\n" + str(unq(r_))[:3000])
-            c.eval("window.toast('Эксперимент %d',{icon:'info'})" % lvl); time.sleep(1.0)
-            log(f"level {lvl}: clip =", c.eval("window.__shClip()"))
-            os_shot(f"{out}/os-clip{lvl}.png")
-            time.sleep(4.5)
-        c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.clip',a:{level:-1}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})", True)
+        r_ = c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.clip',a:{}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})", True)
+        log("hwnd chain:\n" + str(unq(r_))[:3000])
 
     # --- скачивание по ссылке со страницы (жест пользователя, как на реальных сайтах) ---
     log("--- download via page link click ---")
@@ -475,10 +468,14 @@ try:
                 if m_.encode() in data or m_.encode("utf-16le") in data:
                     hits[m_].append(os.path.relpath(fp, udir))
     log("files scanned:", nfiles, "in", udir)
-    for d_ in sorted(os.listdir(udir)):
-        fp_ = os.path.join(udir, d_)
-        if os.path.isdir(fp_):
-            log("  dir", d_, [x for x in sorted(os.listdir(fp_))][:14])
+    for base_ in (os.path.join(udir, "Profiles"), udir):
+        for d_ in sorted(os.listdir(base_)) if os.path.isdir(base_) else []:
+            fp_ = os.path.join(base_, d_)
+            if os.path.isdir(fp_) and (base_ != udir or d_ in ("Default", "Profiles")):
+                log("  dir", os.path.relpath(fp_, udir), [x for x in sorted(os.listdir(fp_))][:30])
+    for sub_ in ("Cache", "Local Storage", "Session Storage", "Network"):
+        for root_, dirs_, files_ in os.walk(os.path.join(udir, "Profiles", "space-main", sub_)):
+            log("  ", os.path.relpath(root_, udir), len(files_), "files", sum(os.path.getsize(os.path.join(root_, f)) for f in files_))
     log("CONTROL (persistent space) marker found in:", hits[mp][:10] or "NOT FOUND")
     log("GHOST marker found on disk in:", hits[mg][:10] or "nothing (OK)")
 
