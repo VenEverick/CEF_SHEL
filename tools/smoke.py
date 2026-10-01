@@ -90,7 +90,7 @@ def os_shot(path):
         log("os_shot failed:", e)
 
 
-args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*", "--layout-log"] + sys.argv[3:]
+args = [exe, f"--remote-debugging-port={PORT}", "--remote-allow-origins=*"] + sys.argv[3:]
 log("launch:", args)
 proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 try:
@@ -222,6 +222,17 @@ try:
         probe("sidebar settings", "document.querySelector('[data-act=settings]')||document.querySelector('.sb-foot button')")
         probe("sidebar bookmarks again", "document.querySelector('.ni[data-page=bookmarks]')")
         os_shot(f"{out}/os-probe.png")
+        try:
+            import Quartz
+            wl = Quartz.CGWindowListCopyWindowInfo(Quartz.kCGWindowListOptionAll, Quartz.kCGNullWindowID)
+            for w in wl:
+                if "helter" in str(w.get("kCGWindowOwnerName", "")):
+                    b = w.get("kCGWindowBounds", {})
+                    log("window:", w.get("kCGWindowNumber"), "layer", w.get("kCGWindowLayer"), "alpha", w.get("kCGWindowAlpha"),
+                        "onscreen", w.get("kCGWindowIsOnscreen"), "name", repr(w.get("kCGWindowName")),
+                        "bounds", int(b.get("X", 0)), int(b.get("Y", 0)), int(b.get("Width", 0)), int(b.get("Height", 0)))
+        except Exception as e:
+            log("window list unavailable:", e)
     log("click sidebar history:", c.eval("(function(){var b=document.querySelector('.ni[data-page=history]'); if(!b) return 'none'; b.click(); return 'clicked';})()"))
     time.sleep(2)
     ui_state("after history click")
