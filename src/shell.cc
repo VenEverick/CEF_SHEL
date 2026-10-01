@@ -462,9 +462,17 @@ void Shell::OnTabNewWindow(CefRefPtr<CefBrowser> browser, const std::string& url
 }
 
 void Shell::OnTabFindResult(CefRefPtr<CefBrowser> browser, int count, int idx,
-                            bool /*final_update*/) {
+                            bool final_update) {
   Tab* t = FindTabByBrowser(browser->GetIdentifier());
   if (!t) return;
+  // Новый поиск подсвечивает все совпадения, но не выделяет первое — делаем это сами.
+  if (t->find_kick && final_update && count > 0) {
+    t->find_kick = false;
+    if (idx == 0 && !t->find_text.empty()) {
+      browser->GetHost()->Find(t->find_text, true, false, true);
+      return;
+    }
+  }
   UiEvent("found", "{\"id\":" + JsString(t->id) + ",\"count\":" +
                        std::to_string(count) + ",\"idx\":" +
                        std::to_string(idx) + "}");

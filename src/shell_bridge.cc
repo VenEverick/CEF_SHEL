@@ -268,8 +268,13 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
         if (text.empty()) {
           t->browser->GetHost()->StopFinding(true);
         } else {
+          const bool next = Flag(a, "next", false);
+          if (!next) {
+            t->find_text = text;
+            t->find_kick = true;
+          }
           t->browser->GetHost()->Find(text, Flag(a, "forward", true), false,
-                                      Flag(a, "next", false));
+                                      next);
         }
       }
     }

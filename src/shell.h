@@ -42,6 +42,8 @@ struct Tab {
   std::string partition;
   std::string requested_url;  // последний URL, который попросил UI
   std::string current_url;    // текущий адрес в браузере вкладки
+  std::string find_text;      // текущий запрос поиска по странице
+  bool find_kick = false;     // после нового запроса выделить первое совпадение
   std::string error_url;      // URL, не открывшийся (показана страница ошибки)
   bool loading = false;
   int browser_id = 0;
