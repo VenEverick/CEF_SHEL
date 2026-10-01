@@ -1,0 +1,7 @@
+run: 36870131843  sha: 2075a102acfaa34b256eadf6a51181f4ab66e676  job: macos
+---- ошибки ----
+32:-- C++ compile flags:            -fno-strict-aliasing;-fstack-protector;-funwind-tables;-fvisibility=hidden;-Wall;-Wextra;-Wendif-labels;-Wnewline-eof;-Wno-missing-field-initializers;-Wno-unused-parameter;-mmacosx-version-min=12.0 -fno-exceptions;-fno-rtti;-fno-threadsafe-statics;-fobjc-call-cxx-cdtors;-fvisibility-inlines-hidden;-std=c++20;-Wno-narrowing;-Wsign-compare;-Wno-undefined-var-template
+67:tab title: Example Domain | shelterNative in tab: undefined | cefQuery in tab: undefined
+224:tab title:  | shelterNative in tab: undefined | cefQuery in tab: undefined
+24:tab title: Example Domain | shelterNative in tab: undefined | cefQuery in tab: undefined
+24:tab title:  | shelterNative in tab: undefined | cefQuery in tab: undefined

@@ -1,0 +1,157 @@
+launch: ['/Applications/SHELTER.app/Contents/MacOS/Shelter', '--remote-debugging-port=9222', '--remote-allow-origins=*']
+targets: [["page", "shelter://app/index.html", ""]]
+title: SHELTER — Приватный браузер
+shelterNative: {"n":true,"p":"darwin","open":"function","tabHook":"function","cq":"function"}
+viewport: {"x":272,"y":55,"width":1157,"height":824,"top":55,"right":1429,"bottom":879,"left":272}
+secret roundtrip: ss1:|true|true
+clip roundtrip: shelter-test
+--- control: real click on bare UI (no native view) ---
+hit-test control sidebar (130,332):
+forcedKey=0 redirected=0
+WINDOW CefNSWindow frame(0,165 1440x890) key=1 main=1 level=0 parent=no children=0 hit=RenderWidgetHostViewCocoa hitFrame={{0, 0}, {1440, 890}}
+  BridgedContentView (0,0 1440x890)
+    ViewsCompositorSuperview (0,0 1440x890)
+    WebContentsViewCocoa (0,0 1440x890)
+      RenderWidgetHostViewCocoa (0,0 1440x890)
+
+real click sidebar bookmarks (control) at 136,357 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/bookmarks
+real click sidebar start (control) at 136,249 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/start
+newTab: t_mupl7t6pcs0dh
+targets after newTab: [["page", "https://example.org/", "Example Domain"], ["page", "shelter://app/index.html", "SHELTER — Приватный браузер"]]
+active tab url in UI: shelter.dev/bookmarks | Закладки ;; shelter.dev/start | Экспресс-панель ;; https://example.org/ | Example Domain
+tab title: Example Domain | shelterNative in tab: undefined | cefQuery in tab: undefined
+open menu: clicked
+snap img present: True | menu: True
+after close: snap img = False
+navigate CC: None
+[search+4s] ui (0.01s): {"url":"shelter.dev/bookmarks | Закладки ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk","snap":false,"vp":[272,55,1157,824]}
+[search+8s] ui (0.00s): {"url":"shelter.dev/bookmarks | Закладки ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk","snap":false,"vp":[272,55,1157,824]}
+[search+12s] ui (0.00s): {"url":"shelter.dev/bookmarks | Закладки ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk","snap":false,"vp":[272,55,1157,824]}
+[search+16s] ui (0.00s): {"url":"shelter.dev/bookmarks | Закладки ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google","ref":"reload","back":"tb-btn","omni":"https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk","snap":false,"vp":[272,55,1157,824]}
+targets after search: [["page", "https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk", "CC - Поиск в Google"], ["iframe", "https://www.youtube.com/embed/?enablejsapi=1&rel=0&autoplay=0&playsinline=1&fs=1&hl=ru-US&authuser=0&embed_con", "https://www.youtube.com/embed/?enablejsapi=1&amp;rel=0&amp;autoplay=0&amp;playsinline=1&amp;fs=1&amp;hl=ru-US&amp;authuser=0&amp;embed_config=%7B%22enc%22%3A%22AXH1ezm5rj6ddYJXvpY4SaRWRPdgEpkhyFh-cmaBHxqsKFApHkYWod5lpqbmvAnQ0PwyffVPa7fh1n2w5dSbhMeN0dqqPdCrLHhGxlX1pGavMBYEUKgpaSIK0JAqroyQ1kjjtmombDnKYJNASg1bZE0xSWFDnCvqpaDAcr-uOXjW24i8KdS26LoN36qGiOsM2JzTOY9p2bp23APtnGbsYwBIlVcqQtS640sfTMhP6YOu6jm5gLQlFnd0288_gTxwq1nT0h6RMRjQ0ljVFsusSw_SXWkfO-WRrH0QDLL0RZZSYTqJ9V1V2oWZSCHs7_iA2G8rBkHkRg%3D%3D%22%7D"], ["page", "shelter://app/index.html", "SHELTER — Приватный браузер"]]
+--- find in page ---
+find cnt: 1 / 22 | snap: False
+find cnt after next: 2 / 22
+find closed, hidden: True
+--- real mouse test ---
+active before: https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk
+real click sidebar bookmarks at 130,357 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/bookmarks
+real click sidebar google tab at 146,504 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk
+real click page area at 850,492 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk
+real click sidebar history after page click at 130,321 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/history
+real click back button at 330,52 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/history
+--- hit-test diagnostics ---
+inject ui: ok
+inject page: ok
+app-regions: ["sbTop:drag:12,14,248,20","winLights:no-drag:18,18,52,12","I:no-drag:18,18,12,12","I:no-drag:38,18,12,12","I:no-drag:58,18,12,12","brand:drag:12,50,248,39","logo:no-drag:18,51,38,38","[object SVGAnimatedString]:no-drag:26,59,22,22","[object SVGAnimatedString]:no-drag:32,64,10,12","brand-t hc:no-drag:68,50,121,39","B:no-drag:68,50,121,15","SUP:no-drag:157,48,7,8","SPAN:no-drag:68,71,121,18","tabTop:drag:0,0,0,0","tabs-scroll:drag:0,0,0,0","I:drag:0,0,0,0","tb:drag:272,0,1158,54","tb-g:no-drag:280,11,134,32","tb-btn:no-drag:280,11,32,32","[object SVGAnimatedString]:no-drag:288,19,17,17","[object SVGAnimatedString]:no-drag:290,21,13,13","btnBack:no-drag:314,11,32,32","[object SVGAnimatedString]:no-drag:322,19,17,17","[object SVGAnimatedString]:no-drag:325,22,10,10","btnFwd:no-drag:348,11,32,32","[object SVGAnimatedString]:no-drag:356,19,17,17","[object SVGAnimatedString]:no-drag:359,22,10,10","btnRef:no-drag:382,11,32,32","[object SVGAnimatedString]:no-drag:390,19,17,17","[object SVGAnimatedString]:no-drag:392,21,13,13","omniTb:no-drag:422,8,744,38","secBtn:no-drag:428,13,28,28","[object SVGAnimatedString]:no-drag:435,20,15,15","[object SVGAnimatedString]:no-drag:437,21,10,13","omni-field:no-drag:460,9,700,36","omniDisp:no-drag:460,9,700,36","tag:no-drag:464,17,67,20","B:no-drag:539,17,56,20","omniInput:no-drag:460,9,700,36","starBtn:no-drag:0,0,0,0","[object SVGAnimatedString]:no-drag:0,0,0,0","[object SVGAnimatedString]:no-drag:0,0,0,0","tbSuggest:no-drag:0,0,0,0","tb-g:no-drag:1174,11,254,32","ctlGrid:no-drag:1176,11,168,32","ctl:no-drag:1176,11,32,32","[object SVGAnimatedString]:no-drag:1184,19,17,17","[object SVGAnimatedString]:no-drag:1186,20,11,14","ctl on:no-drag:1210,11,32,32","[object SVGAnimatedString]:no-drag:1218,19,17,17","[object SVGAnimatedString]:no-drag:1220,20,11,14","ctl on:no-drag:1244,11,32,32","[object SVGAnimatedString]:no-drag:1252,19,17,17","[object SVGAnimatedString]:no-drag:1254,21,11,13","ctl on:no-drag:1278,11,32,32","[object SVGAnimatedString]:no-drag:1286,19,17,17","[object SVGAnimatedString]:no-drag:1287,20,14,14","ctl fire:no-drag:1312,11,32,32","[object SVGAnimatedString]:no-drag:1320,19,17,17","[object SVGAnimatedString]:no-drag:1323,21,10,13"]
+hit-test sidebar (130,332):
+forcedKey=2 redirected=0
+WINDOW CefNSWindow frame(0,165 1440x890) key=1 main=1 level=0 parent=no children=0 hit=RenderWidgetHostViewCocoa hitFrame={{0, 0}, {1440, 890}}
+  BridgedContentView (0,0 1440x890)
+    ViewsCompositorSuperview (0,0 1440x890)
+    WebContentsViewCocoa (0,0 1440x890)
+      RenderWidgetHostViewCocoa (0,0 1440x890)
+
+hit-test viewport (850,467):
+forcedKey=2 redirected=0
+WINDOW CefNSWindow frame(0,165 1440x890) key=1 main=1 level=0 parent=no children=0 hit=RenderWidgetHostViewCocoa hitFrame={{0, 0}, {1440, 890}}
+  BridgedContentView (0,0 1440x890)
+    ViewsCompositorSuperview (0,0 1440x890)
+    WebContentsViewCocoa (0,0 1440x890)
+      RenderWidgetHostViewCocoa (0,0 1440x890)
+
+probe sidebar bookmarks @130,357: ui=["mousemove@130,332","pointerdown@130,332","mousedown@130,332","click@130,332"] page=[] uiFocus=True
+probe toolbar back @330,52: ui=["mousemove@330,27","pointerdown@330,27","mousedown@330,27","click@330,27"] page=[] uiFocus=True
+probe omnibox @810,52: ui=["mousemove@810,27","pointerdown@810,27","mousedown@810,27","click@810,27"] page=[] uiFocus=True
+probe viewport center @850,492: ui=["mousemove@850,467","pointerdown@850,467","mousedown@850,467","click@850,467"] page=[] uiFocus=True
+probe sidebar settings @136,810: ui=["mousemove@136,785","pointerdown@136,785","mousedown@136,785","click@136,785"] page=[] uiFocus=True
+probe sidebar bookmarks again @130,357: ui=["mousemove@130,332","pointerdown@130,332","mousedown@130,332","click@130,332"] page=[] uiFocus=True
+window: 37 layer 0 alpha 1.0 onscreen None name '' bounds 272 80 1157 824
+window: 32 layer 0 alpha 1.0 onscreen None name '' bounds 0 580 500 500
+window: 31 layer 0 alpha 1.0 onscreen None name '' bounds 0 0 1920 24
+window: 29 layer 0 alpha 1.0 onscreen None name '' bounds 0 0 1920 24
+window: 28 layer 0 alpha 1.0 onscreen None name '' bounds 0 0 1920 24
+window: 26 layer 0 alpha 1.0 onscreen True name 'SHELTER' bounds 0 25 1440 890
+window: 30 layer 0 alpha 1.0 onscreen None name '' bounds 0 0 1920 24
+window list total: 29 pid: 10030
+click sidebar history: clicked
+[after history click] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История","ref":"reload","back":"tb-btn off","omni":"shelter://history","snap":false,"vp":[272,55,1157,824]}
+click back: clicked
+[after back] ui (0.00s): {"url":"shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История","ref":"reload","back":"tb-btn off","omni":"shelter://history","snap":false,"vp":[272,55,1157,824]}
+--- functional scenario (local server) ---
+newTab p1: t_mupl981lsvgex
+after p1: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p1 | Page /p1
+navigate p2: None
+after p2: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+after back: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p1 | Page /p1
+after forward: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+local find cnt (expect 1 / 3): 1 / 3
+zoom: set
+page devicePixel/zoom check, innerWidth: 771
+navigate download: None
+download prompt shown: True
+download file exists: True 200000 dir: /Users/runner/Downloads
+tabs after download: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/p2 | Page /p2
+--- zoom across origins ---
+zoom: base innerWidth p2: 1157
+zoom 1.5 same host p2: 771
+zoom 1.5 other host p3 (expect ~base/1.5): 771
+zoom 1.5 back to first host p4 (expect ~base/1.5): 771
+zoom reset p4: 1157
+--- overlays over live page (holes) ---
+perf before: {"freezes":2,"thaws":2,"snapMs":[95,104],"snapKB":[18,12],"freezeMs":[149,369],"thawMs":[78,180],"holes":1,"clips":21,"longTasks":10,"longMax":872}
+toast: snap = False | clip = 25,25,25,25|3,673,302,100;3,776,310,45
+after toast: clip = 25,25,25,25|3,722,302,99
+tip shown: True | snap = False | clip = 25,25,25,25|3,722,302,99;25,0,66,33
+suggest shown: True | snap = False | clip = 25,25,25,25|149,0,746,176;3,722,302,99;25,0,66,33
+real click suggest item (click through hole) at 794,147 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: shelter.dev/deepthink?q=goo
+suggest click changed url: True | http://127.0.0.1:8765/p4 -> shelter.dev/deepthink?q=goo
+perf after: {"freezes":2,"thaws":2,"snapMs":[95,104],"snapKB":[18,12],"freezeMs":[149,369],"thawMs":[78,180],"holes":3,"clips":29,"longTasks":10,"longMax":872}
+--- download via page link click ---
+file link: prompt = True
+real click file link: real click on Save at 887,550 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: http://127.0.0.1:8765/dl
+file link: prompt still open = False | file.bin exists = True | tabs: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/dl | DL
+blob link: prompt = True
+real click blob link: real click on Save at 887,550 win=(0,25) iw=1440 ow=1440 rc=0 
+   -> active tab url: http://127.0.0.1:8765/dl
+blob link: prompt still open = False | file.bin exists = False | tabs: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; *http://127.0.0.1:8765/dl | DL
+--- shelter.log ---
+download before id=dl1 name=shelter-test.bin url=http://127.0.0.1:8765/file.bin size=200000
+download decision id=dl1 action=save path=/Users/runner/Downloads/shelter-test.bin
+download update id=dl1 state=completed bytes=200000 reason=0 path=/Users/runner/Downloads/shelter-test.bin
+download before id=dl2 name=shelter-test.bin url=http://127.0.0.1:8765/file.bin size=200000
+download decision id=dl2 action=save path=/Users/runner/Downloads/shelter-test.bin
+download update id=dl2 state=completed bytes=200000 reason=0 path=/Users/runner/Downloads/shelter-test.bin
+download before id=dl3 name=blob.txt url=http://127.0.0.1:8765/dl# size=322
+download decision id=dl3 action=save path=/Users/runner/Downloads/blob.txt
+download update id=dl3 state=completed bytes=322 reason=0 path=/Users/runner/Downloads/blob.txt
+
+tabs before/after close: 5 4 | active: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; *shelter.dev/history | История
+--- ghost: disk leak check ---
+ghost on: 1
+ghost tab: shelter.dev/start | Экспресс-панель ;; shelter.dev/start | Экспресс-панель ;; https://www.google.com/search?q=CC&sei=MGS-avjgL4XT5NoPmeuKqQk | CC - Поиск в Google ;; shelter.dev/history | История ;; http://127.0.0.1:8765/mark?m=PERSISTMARK985de857e858 | Mark ;; *http://127.0.0.1:8765/mark?m=GHOSTMARK2b0284442608 | Mark
+page marker (ghost tab): GHOSTMARK2b0284442608
+ghost page cookies (must NOT contain PERSISTMARK): c_GHOSTMARK2b0284442608=1
+ghost page localStorage keys: k_GHOSTMARK2b0284442608
+persist page cookies: c_PERSISTMARK985de857e858=1
+files scanned: 271 in /Users/runner/Library/Application Support/SHELTER
+  dir Profiles/space-main []
+  dir Default ['Account Web Data', 'Account Web Data-journal', 'Affiliation Database', 'Affiliation Database-journal', 'AutofillAiModelCache', 'AutofillStrikeDatabase', 'BookmarkMergedSurfaceOrdering', 'BudgetDatabase', 'ClientCertificates', 'Cookies', 'Cookies-journal', 'DIPS', 'DIPS-wal', 'DawnGraphiteCache', 'DawnWebGPUCache', 'Extension Rules', 'Extension Scripts', 'Extension State', 'Favicons', 'Favicons-journal', 'Feature Engagement Tracker', 'GPUCache', 'History', 'History-journal', 'LOCK', 'LOG', 'Local Storage', 'Login Data', 'Login Data For Account', 'Login Data For Account-journal']
+  dir Profiles ['space-main']
+CONTROL (persistent space) marker found in: ['Default/Local Storage/leveldb/000003.log']
+GHOST marker found on disk in: nothing (OK)
+ui console problems: 2
+   Failed to load resource: the server responded with a status of 404 (Not Found) shelter://app/native.js
+   Failed to load resource: the server responded with a status of 404 (Not Found) shelter://app/cdn-cgi/challenge-platform/scripts/jsd/main.js
+--- layout.log ---
+layout.log unavailable: [Errno 2] No such file or directory: '/Users/runner/Library/Application Support/SHELTER/layout.log'
+SMOKE DONE
