@@ -579,13 +579,22 @@ std::string UniquePath(const std::string& dir, const std::string& name) {
 
 }  // namespace
 
-void Shell::OnTabDownloadBefore(CefRefPtr<CefBrowser>,
+void Shell::OnTabDownloadBefore(CefRefPtr<CefBrowser> browser,
                                 CefRefPtr<CefDownloadItem> item,
                                 const std::string& suggested_name,
                                 CefRefPtr<CefBeforeDownloadCallback> callback) {
   const std::string id = "dl" + std::to_string(item->GetId());
   std::string name = suggested_name.empty() ? "download" : suggested_name;
   pending_downloads_[id] = {callback, name};
+
+  // Навигация по ссылке-загрузке не меняет страницу: возвращаем UI реальный адрес вкладки.
+  if (Tab* t = FindTabByBrowser(browser->GetIdentifier())) {
+    if (!t->current_url.empty() && !SameUrl(t->current_url, t->requested_url)) {
+      t->requested_url = t->current_url;
+      UiEvent("nav", "{\"id\":" + JsString(t->id) + ",\"url\":" +
+                         JsString(t->current_url) + "}");
+    }
+  }
 
   std::ostringstream os;
   os << "{\"id\":" << JsString(id) << ",\"filename\":" << JsString(name)
