@@ -330,8 +330,8 @@
     for (i = 0; i < list.length; i++) {
       var r = list[i].getBoundingClientRect();
       if (r.width < 1 || r.height < 1) continue;
-      var x0 = Math.max(Math.floor(r.left) - 3, vp.x), y0 = Math.max(Math.floor(r.top) - 3, vp.y);
-      var x1 = Math.min(Math.ceil(r.right) + 3, vp.x + vp.w), y1 = Math.min(Math.ceil(r.bottom) + 3, vp.y + vp.h);
+      var x0 = Math.max(Math.floor(r.left) - 2, vp.x), y0 = Math.max(Math.floor(r.top) - 2, vp.y);
+      var x1 = Math.min(Math.ceil(r.right) + 2, vp.x + vp.w), y1 = Math.min(Math.ceil(r.bottom) + 2, vp.y + vp.h);
       if (x1 <= x0 || y1 <= y0) continue;
       out.push([x0, y0, x1, y1]);
     }

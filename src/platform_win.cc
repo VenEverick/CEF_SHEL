@@ -114,6 +114,49 @@ void SetColorScheme(bool /*dark*/) {}
 
 std::string DebugHitTest(double, double) { return std::string(); }
 
+static int g_clip_level = -1;
+
+void SetClipLevel(int level) { g_clip_level = level; }
+
+std::string DumpWindowChain(void* handle) {
+  HWND h = static_cast<HWND>(handle);
+  std::string out;
+  HWND root = h ? GetAncestor(h, GA_ROOT) : nullptr;
+  for (HWND c = h; c; c = GetParent(c)) {
+    wchar_t cls[128] = {0};
+    GetClassNameW(c, cls, 127);
+    RECT r{};
+    GetWindowRect(c, &r);
+    char buf[512];
+    char cls8[256] = {0};
+    WideCharToMultiByte(CP_UTF8, 0, cls, -1, cls8, 255, nullptr, nullptr);
+    RECT rb{};
+    int rt = GetWindowRgnBox(c, &rb);
+    snprintf(buf, sizeof(buf), "  hwnd=%p cls=%s rect=%ld,%ld,%ld,%ld style=%08lx ex=%08lx rgn=%d\n", (void*)c, cls8,
+             r.left, r.top, r.right - r.left, r.bottom - r.top,
+             static_cast<unsigned long>(GetWindowLongPtrW(c, GWL_STYLE)),
+             static_cast<unsigned long>(GetWindowLongPtrW(c, GWL_EXSTYLE)), rt);
+    out += buf;
+    if (c == root) break;
+  }
+  if (root) {
+    out += " root children:\n";
+    for (HWND c = GetWindow(root, GW_CHILD); c; c = GetWindow(c, GW_HWNDNEXT)) {
+      wchar_t cls[128] = {0};
+      GetClassNameW(c, cls, 127);
+      char cls8[256] = {0};
+      WideCharToMultiByte(CP_UTF8, 0, cls, -1, cls8, 255, nullptr, nullptr);
+      RECT r{};
+      GetWindowRect(c, &r);
+      char buf[512];
+      snprintf(buf, sizeof(buf), "  child hwnd=%p cls=%s rect=%ld,%ld,%ld,%ld vis=%d\n", (void*)c, cls8, r.left,
+               r.top, r.right - r.left, r.bottom - r.top, IsWindowVisible(c) ? 1 : 0);
+      out += buf;
+    }
+  }
+  return out;
+}
+
 void InstallInputFixes() {}
 
 void ApplyViewClip(void* handle, const double radii[4],
@@ -124,7 +167,11 @@ void ApplyViewClip(void* handle, const double radii[4],
   // Область нужно задать окну — прямому потомку главного окна (виджет overlay).
   HWND root = GetAncestor(h, GA_ROOT);
   HWND cur = h;
-  while (cur && GetParent(cur) && GetParent(cur) != root) cur = GetParent(cur);
+  if (g_clip_level < 0) {
+    while (cur && GetParent(cur) && GetParent(cur) != root) cur = GetParent(cur);
+  } else {
+    for (int i = 0; i < g_clip_level && cur && GetParent(cur) && GetParent(cur) != root; ++i) cur = GetParent(cur);
+  }
   if (!cur) return;
 
   bool any = !holes.empty();

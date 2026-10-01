@@ -354,6 +354,23 @@ bool Shell::HandleBridge(CefRefPtr<CefBrowser>, const std::string& m,
     cb->Success(JsString(platform::DebugHitTest(Num(a, "x", 0), Num(a, "y", 0))));
     return true;
   }
+  if (m == "dbg.clip") {  // диагностика (CI): на каком предке HWND держать область
+    Tab* t = FindTab(active_tab_);
+    if (t && t->browser) {
+      // сбросить область на прежнем окне
+      double zr[4] = {0, 0, 0, 0};
+      std::vector<std::array<int, 4>> none;
+      platform::ApplyViewClip(reinterpret_cast<void*>(t->browser->GetHost()->GetWindowHandle()), zr, none,
+                              std::max(1, last_rect_.width), std::max(1, last_rect_.height));
+      if (a->HasKey("level")) platform::SetClipLevel(static_cast<int>(Num(a, "level", -1)));
+      ApplyClip(t);
+      cb->Success(JsString(platform::DumpWindowChain(
+          reinterpret_cast<void*>(t->browser->GetHost()->GetWindowHandle()))));
+    } else {
+      cb->Success("\"no tab\"");
+    }
+    return true;
+  }
   if (m == "auth.window") {  // TODO(этап 3): окно входа SHELTER ID
     cb->Success("{\"ok\":false}");
     return true;

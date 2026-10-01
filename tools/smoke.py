@@ -398,6 +398,17 @@ try:
     time.sleep(0.5)
     log("perf after:", c.eval("JSON.stringify(window.__shPerf)"))
 
+    if platform.system() == "Windows":
+        log("--- clip experiments (which HWND gets the region) ---")
+        for lvl in (-1, 0, 1, 2, 3):
+            r_ = c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.clip',a:{level:%d}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})" % lvl, True)
+            if lvl == -1: log("hwnd chain:\n" + str(unq(r_))[:3000])
+            c.eval("window.toast('Эксперимент %d',{icon:'info'})" % lvl); time.sleep(1.0)
+            log(f"level {lvl}: clip =", c.eval("window.__shClip()"))
+            os_shot(f"{out}/os-clip{lvl}.png")
+            time.sleep(4.5)
+        c.eval("new Promise(function(res){cefQuery({request:JSON.stringify({m:'dbg.clip',a:{level:-1}}),onSuccess:function(r){res(r)},onFailure:function(c,m){res('fail '+m)}})})", True)
+
     # --- скачивание по ссылке со страницы (жест пользователя, как на реальных сайтах) ---
     log("--- download via page link click ---")
     c.eval("window.navigate('http://127.0.0.1:8765/dl')"); time.sleep(4)
@@ -446,7 +457,7 @@ try:
     c.eval("window.newTab('http://127.0.0.1:8765/mark?m=%s')" % mg); time.sleep(5)
     log("ghost tab:", tabs_desc())
     log("page marker (ghost tab):", page_eval("mark?m=" + mg, "document.body.innerText"))
-    time.sleep(10)  # даём сбросить кеш/историю/localStorage на диск
+    time.sleep(30)  # даём сбросить кеш/историю/localStorage на диск
     c.eval("window.shelterSetZoomAll(1)")
     udir = os.path.expanduser("~/Library/Application Support/SHELTER") if platform.system() == "Darwin" else os.path.join(os.environ.get("LOCALAPPDATA", ""), "SHELTER")
     hits = {mp: [], mg: []}
@@ -464,6 +475,10 @@ try:
                 if m_.encode() in data or m_.encode("utf-16le") in data:
                     hits[m_].append(os.path.relpath(fp, udir))
     log("files scanned:", nfiles, "in", udir)
+    for d_ in sorted(os.listdir(udir)):
+        fp_ = os.path.join(udir, d_)
+        if os.path.isdir(fp_):
+            log("  dir", d_, [x for x in sorted(os.listdir(fp_))][:14])
     log("CONTROL (persistent space) marker found in:", hits[mp][:10] or "NOT FOUND")
     log("GHOST marker found on disk in:", hits[mg][:10] or "nothing (OK)")
 

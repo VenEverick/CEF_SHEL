@@ -58,14 +58,79 @@ void SetColorScheme(bool dark) {
 
 
 static int g_forced_key = 0;
+static int g_redirected = 0;
+static bool g_redirecting = false;
+static NSWindow* g_overlay_win = nil;  // окно вида вкладки (не retain)
+static std::vector<std::array<int, 4>> g_holes;
+static int g_hole_view_w = 0, g_hole_view_h = 0;
+
+static bool InHole(NSEvent* e) {
+  NSWindow* w = e.window;
+  if (!w || w != g_overlay_win || g_holes.empty() || !w.contentView) return false;
+  const CGFloat W = w.contentView.frame.size.width, H = w.contentView.frame.size.height;
+  const double sx = g_hole_view_w > 0 ? W / g_hole_view_w : 1, sy = g_hole_view_h > 0 ? H / g_hole_view_h : 1;
+  const double x = e.locationInWindow.x / sx, y = (H - e.locationInWindow.y) / sy;
+  for (const auto& h : g_holes) {
+    if (x >= h[0] && x < h[0] + h[2] && y >= h[1] && y < h[1] + h[3]) return true;
+  }
+  return false;
+}
+
+// Прозрачный участок («дыра») окна вкладки пропускает мышь окну интерфейса под ним.
+static NSEvent* RedirectToUi(NSEvent* e) {
+  NSWindow* w = e.window;
+  const NSPoint sp = [w convertPointToScreen:e.locationInWindow];
+  NSWindow* ui = nil;
+  for (NSWindow* c in [NSApp windows]) {
+    if (c == w || !c.isVisible || !c.canBecomeKeyWindow) continue;
+    NSString* cn = NSStringFromClass([c class]);
+    if (![cn containsString:@"NativeWidgetMac"] && ![cn hasPrefix:@"Cef"]) continue;
+    if (NSPointInRect(sp, c.frame)) { ui = c; break; }
+  }
+  if (!ui) return e;
+  if ((e.type == NSEventTypeLeftMouseDown || e.type == NSEventTypeRightMouseDown) && !ui.isKeyWindow)
+    [ui makeKeyWindow];
+  NSEvent* ne = [NSEvent mouseEventWithType:e.type
+                                   location:[ui convertPointFromScreen:sp]
+                              modifierFlags:e.modifierFlags
+                                  timestamp:e.timestamp
+                               windowNumber:ui.windowNumber
+                                    context:nil
+                                eventNumber:e.eventNumber
+                                 clickCount:e.clickCount
+                                   pressure:e.pressure];
+  if (!ne) return e;
+  g_redirected++;
+  [ui sendEvent:ne];
+  return nil;
+}
 static id g_mouse_monitor = nil;
+
+void SetClipLevel(int) {}
+std::string DumpWindowChain(void*) { return std::string(); }
 
 void InstallInputFixes() {
   if (g_mouse_monitor) return;
   g_mouse_monitor = [NSEvent
       addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskRightMouseDown |
-                                            NSEventMaskOtherMouseDown)
+                                            NSEventMaskOtherMouseDown | NSEventMaskLeftMouseUp |
+                                            NSEventMaskRightMouseUp | NSEventMaskLeftMouseDragged |
+                                            NSEventMaskMouseMoved)
                                    handler:^NSEvent*(NSEvent* e) {
+                                     const NSEventType t = e.type;
+                                     if (t == NSEventTypeLeftMouseDown || t == NSEventTypeRightMouseDown) {
+                                       if (InHole(e)) { g_redirecting = true; return RedirectToUi(e); }
+                                     } else if (t == NSEventTypeLeftMouseUp || t == NSEventTypeRightMouseUp ||
+                                                t == NSEventTypeLeftMouseDragged) {
+                                       if (g_redirecting && e.window == g_overlay_win) {
+                                         if (t != NSEventTypeLeftMouseDragged) g_redirecting = false;
+                                         return RedirectToUi(e);
+                                       }
+                                       return e;
+                                     } else if (t == NSEventTypeMouseMoved) {
+                                       if (InHole(e)) return RedirectToUi(e);
+                                       return e;
+                                     }
                                      NSWindow* w = e.window;
                                      if (w && w.isVisible && !w.isKeyWindow && w.canBecomeKeyWindow &&
                                          ![NSApp modalWindow]) {
@@ -88,6 +153,10 @@ void ApplyViewClip(void* handle, const double radii[4],
   NSView* v = (NSView*)handle;
   NSWindow* win = v ? v.window : nil;
   if (!win || !win.contentView) return;
+  g_overlay_win = win;
+  g_holes = holes;
+  g_hole_view_w = view_w;
+  g_hole_view_h = view_h;
   NSView* root = win.contentView.superview ? win.contentView.superview : win.contentView;
   bool any = !holes.empty();
   for (int i = 0; i < 4; ++i) any = any || radii[i] > 0.5;
@@ -148,7 +217,7 @@ std::string DebugHitTest(double x, double y) {
     NSRect wf = w.frame;
     NSPoint p = NSMakePoint(x, wf.size.height - y);
     NSView* hit = [cv hitTest:p];
-    [out appendFormat:@"forcedKey=%d\n", g_forced_key];
+    [out appendFormat:@"forcedKey=%d redirected=%d\n", g_forced_key, g_redirected];
     [out appendFormat:@"WINDOW %@ frame(%.0f,%.0f %.0fx%.0f) key=%d main=%d level=%ld parent=%@ children=%lu hit=%@ hitFrame=%@\n",
                       NSStringFromClass([w class]), wf.origin.x, wf.origin.y, wf.size.width, wf.size.height,
                       (int)w.isKeyWindow, (int)w.isMainWindow, (long)w.level, w.parentWindow ? @"yes" : @"no",

@@ -38,6 +38,10 @@ void ApplyViewClip(void* handle, const double radii[4],
                    const std::vector<std::array<int, 4>>& holes, int view_w,
                    int view_h);
 
+// Диагностика (CI): уровень предка окна, которому задаётся область (Windows), и дамп цепочки HWND.
+void SetClipLevel(int level);
+std::string DumpWindowChain(void* handle);
+
 // macOS: первый клик по неактивному окну приложения не должен «съедаться».
 void InstallInputFixes();
 
